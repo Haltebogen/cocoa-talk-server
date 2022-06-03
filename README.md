@@ -1,4 +1,2 @@
 # Git Talk Server
-<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white">
-<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white">
-<img src="https://img.shields.io/badge/Redis-F80000?style=for-the-badge&logo=Redis&logoColor=white">
+`Github user`들을 위한 채팅 서비스 서버 Repository 입니다.
