@@ -13,10 +13,10 @@ public class Member extends BaseAuditEntity{
     @Column(name="member_id")
     private Long id;
 
-    private Long githubId;
+    private Long providerId;
 
     @Enumerated(EnumType.STRING)
-    private MemberType memberType;
+    private ProviderType providerType;
     private String email;
     private String nickName;
     private String bio;
@@ -26,18 +26,19 @@ public class Member extends BaseAuditEntity{
     private String followersUrl;
     private String followingUrl;
 
+
     @Builder
     public Member(
-            Long githubId,
-            MemberType memberType,
+            Long providerId,
+            ProviderType providerType,
             String email,
             String nickName,
             String company,
             String followersUrl,
             String followingUrl) {
 
-        this.githubId = githubId;
-        this.memberType = memberType;
+        this.providerId = providerId;
+        this.providerType = providerType;
         this.email = email;
         this.nickName = nickName;
         this.company = company;

@@ -1,5 +1,5 @@
 package com.haltebogen.gittalk.entity;
 
-public enum MemberType {
+public enum ProviderType {
     BASIC, GITHUB
 }
