@@ -3,11 +3,14 @@ package com.haltebogen.gittalk.controller;
 import com.haltebogen.gittalk.dto.PaginationResponseDto;
 import com.haltebogen.gittalk.dto.member.MemberResponseDto;
 import com.haltebogen.gittalk.entity.Member;
+import com.haltebogen.gittalk.response.ResponseHandler;
 import com.haltebogen.gittalk.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,15 +25,15 @@ public class MemberAPIController {
     private final MemberService memberService;
 
     @GetMapping("search")
-    public PaginationResponseDto searchPost(
+    public ResponseEntity<Object> searchPost(
             @PageableDefault Pageable pageable,
             @RequestParam String keyword
     ) {
         Page<Member> pageData = memberService.findUserBySearch(pageable, keyword);
-        return new PaginationResponseDto(
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, new PaginationResponseDto(
                 pageData.getTotalPages(),
                 pageData.hasNext(),
                 pageData.stream().map(MemberResponseDto::new).collect(Collectors.toList())
-        );
+        ));
     }
 }

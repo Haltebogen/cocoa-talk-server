@@ -12,6 +12,4 @@ public class GitTalkApplication {
 		SpringApplication.run(GitTalkApplication.class, args);
 	}
 
-
-
 }

@@ -15,7 +15,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByEmail(String email);
 
-    boolean isExistByEmail(String email);
+    boolean existsByEmail(String email);
 
     @Query("select m from Member m " +
             "where m.nickName like %:keyword% or m.email like %:keyword% " +
