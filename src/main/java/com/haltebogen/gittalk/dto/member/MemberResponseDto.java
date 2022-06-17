@@ -9,7 +9,6 @@ public class MemberResponseDto {
     private String nickName;
     private String profileImageUrl;
     private String statusMessage;
-
     public MemberResponseDto(Member member) {
         this.email = member.getEmail();
         this.nickName = member.getNickName();
