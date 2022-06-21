@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: application-github.yml
   datasource:
     url: jdbc:h2:tcp://localhost/~/git-talk-server
     username: sa

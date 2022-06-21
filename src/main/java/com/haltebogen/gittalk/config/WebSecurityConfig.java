@@ -11,18 +11,23 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
+
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(
             HttpSecurity http
-            ) throws Exception {
+    ) throws Exception {
         http
                 .csrf().disable() //csrf
                 .exceptionHandling()// 예외처리
                 .and()
                 .authorizeRequests()
+                .antMatchers("/oauth2/**").authenticated()
                 .anyRequest().permitAll() // 권한 설정
-                ;
-    return http.build();
+                .and()
+                .oauth2Login();
+        return http.build();
     }
+
+
 
 }
