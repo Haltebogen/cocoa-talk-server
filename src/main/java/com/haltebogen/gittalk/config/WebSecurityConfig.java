@@ -22,9 +22,7 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/oauth2/**").authenticated()
-                .anyRequest().permitAll() // 권한 설정
-                .and()
-                .oauth2Login();
+                .anyRequest().permitAll(); // 권한 설정
         return http.build();
     }
 
