@@ -1,6 +1,8 @@
 package com.haltebogen.gittalk.service;
 
+import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
 import com.haltebogen.gittalk.entity.Member;
+import com.haltebogen.gittalk.entity.ProviderType;
 import com.haltebogen.gittalk.repository.MemberRepository;
 import com.haltebogen.gittalk.trace.Trace;
 import lombok.RequiredArgsConstructor;
@@ -19,5 +21,30 @@ public class MemberService {
         return memberRepository.findBySearch(keyword, pageable);
     }
 
+    public Member createMember(GithubUserResponseDto githubUserResponseDto) {
+        if (!isExistMember(githubUserResponseDto)) {
+            return Member.builder()
+                    .providerId(githubUserResponseDto.getId())
+                    .providerType(ProviderType.GITHUB)
+                    .email("null")
+                    .nickName(githubUserResponseDto.getLogin())
+                    .name(githubUserResponseDto.getName())
+                    .company(githubUserResponseDto.getCompany())
+                    .followersUrl(githubUserResponseDto.getFollowers_url())
+                    .followingUrl(githubUserResponseDto.getFollowings_url())
+                    .followersNum(githubUserResponseDto.getFollowers())
+                    .followingsNum(githubUserResponseDto.getFollowings()).build();
+        }
+
+        return memberRepository.findByProviderId(githubUserResponseDto.getId()).get();
+
+    }
+
+    private boolean isExistMember(GithubUserResponseDto githubUserResponseDto){
+        Long githubUserId = githubUserResponseDto.getId();
+
+        return memberRepository.findByProviderId(githubUserId).isPresent();
+
+    }
 
 }
