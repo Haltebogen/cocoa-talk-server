@@ -1,7 +1,7 @@
 package com.haltebogen.gittalk.service;
 
 import com.haltebogen.gittalk.entity.Member;
-import com.haltebogen.gittalk.respository.MemberRepository;
+import com.haltebogen.gittalk.repository.MemberRepository;
 import com.haltebogen.gittalk.trace.Trace;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

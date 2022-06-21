@@ -1,4 +1,4 @@
-package com.haltebogen.gittalk.respository;
+package com.haltebogen.gittalk.repository;
 
 import com.haltebogen.gittalk.entity.Member;
 import org.springframework.data.domain.Page;

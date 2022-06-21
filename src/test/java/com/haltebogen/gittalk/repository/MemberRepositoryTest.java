@@ -2,7 +2,6 @@ package com.haltebogen.gittalk.repository;
 
 import com.haltebogen.gittalk.entity.Member;
 import com.haltebogen.gittalk.init.InitMember;
-import com.haltebogen.gittalk.respository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
