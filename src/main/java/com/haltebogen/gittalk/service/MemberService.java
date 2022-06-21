@@ -18,4 +18,6 @@ public class MemberService {
     public Page<Member> findUserBySearch(Pageable pageable, String keyword) {
         return memberRepository.findBySearch(keyword, pageable);
     }
+
+
 }

@@ -24,6 +24,7 @@ public class OAuthService {
     private final RestTemplate restTemplate;
 
     // Access Token 받는 로직
+    @Deprecated
     public TokenDto getAccessTokenDto(String code) {
 
         MultiValueMap<String, String> clientSecretPair = new LinkedMultiValueMap<>();
