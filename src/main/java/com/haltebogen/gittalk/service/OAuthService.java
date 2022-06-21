@@ -20,8 +20,6 @@ import org.springframework.web.client.RestTemplate;
 public class OAuthService {
     private final String GITHUB_USER_API_URL_PATH = "https://api.github.com/user";
     private final String GITHUB_ACCESS_TOKEN_API_URL_PATH = "https://github.com/login/oauth/access_token";
-
-    private final MemberRepository memberRepository;
     private final Environment env;
     private final RestTemplate restTemplate;
 
