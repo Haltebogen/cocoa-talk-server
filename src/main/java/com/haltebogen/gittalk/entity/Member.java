@@ -26,6 +26,10 @@ public class Member extends BaseAuditEntity{
     private String followersUrl;
     private String followingUrl;
 
+    private Long followersNum;
+
+    private Long followingsNum;
+
 
     @Builder
     public Member(
