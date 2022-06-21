@@ -58,10 +58,4 @@ public class OAuthService {
         return responseGithubData.getBody();
     }
 
-
-    // Member 객체 생성 로직
-
-    // private Member 객체 생성 가능한지에 대한 불 메소드
-
-
 }
