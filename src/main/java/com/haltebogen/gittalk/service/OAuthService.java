@@ -40,5 +40,28 @@ public class OAuthService {
         return response.getBody();
     }
 
+    // Github 정보 받아오는 로직
+    public GithubUserResponseDto getGithubUserData(TokenDto accessTokenDto) {
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("Authorization", "token " + accessTokenDto.getAccess_token());
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<GithubUserResponseDto> responseGithubData = restTemplate.exchange(
+                GITHUB_USER_API_URL_PATH,
+                HttpMethod.GET,
+                httpEntity,
+                GithubUserResponseDto.class
+        );
+
+        return responseGithubData.getBody();
+    }
+
+
+    // Member 객체 생성 로직
+
+    // private Member 객체 생성 가능한지에 대한 불 메소드
+
 
 }
