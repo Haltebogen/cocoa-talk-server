@@ -3,7 +3,7 @@ package com.haltebogen.gittalk.init;
 import com.haltebogen.gittalk.entity.Member;
 import com.haltebogen.gittalk.entity.ProviderType;
 
-public class InitMember {
+public class InitInstance {
     public Member createMember() {
         return Member.builder()
                 .providerId(1L)
