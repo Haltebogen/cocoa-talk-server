@@ -3,6 +3,7 @@ package com.haltebogen.gittalk.service;
 import com.haltebogen.gittalk.dto.TokenDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
 import com.haltebogen.gittalk.repository.MemberRepository;
+import com.haltebogen.gittalk.trace.Trace;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class OAuthService {
     private final String GITHUB_USER_API_URL_PATH = "https://api.github.com/user";
+    private final String GITHUB_ACCESS_TOKEN_API_URL_PATH = "https://github.com/login/oauth/access_token";
 
     private final MemberRepository memberRepository;
     private final Environment env;
@@ -36,12 +38,13 @@ public class OAuthService {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(clientSecretPair, headers);
 
-        ResponseEntity<TokenDto> response = restTemplate.postForEntity("\"https://github.com/login/oauth/access_token", request, TokenDto.class);
+        ResponseEntity<TokenDto> response = restTemplate.postForEntity(GITHUB_ACCESS_TOKEN_API_URL_PATH, request, TokenDto.class);
 
         return response.getBody();
     }
 
     // Github 정보 받아오는 로직
+    @Trace
     public GithubUserResponseDto getGithubUserData(TokenDto accessTokenDto) {
         HttpHeaders headers = new HttpHeaders();
 
