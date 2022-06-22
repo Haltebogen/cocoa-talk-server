@@ -1,8 +1,10 @@
 package com.haltebogen.gittalk.dto.oauth;
 
-import com.haltebogen.gittalk.entity.Member;
-import lombok.Data;
-@Data
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@Builder
 public class GithubUserResponseDto {
 
     private Long id;
@@ -13,7 +15,6 @@ public class GithubUserResponseDto {
     private String name;
     private String bio;
     private String company;
-
     private Long followers;
     private Long followings;
 
