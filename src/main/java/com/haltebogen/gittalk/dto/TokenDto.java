@@ -1,8 +1,10 @@
 package com.haltebogen.gittalk.dto;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 
-@Data
+@Getter
+@Builder
 public class TokenDto {
     private String access_token;
     private String token_type;

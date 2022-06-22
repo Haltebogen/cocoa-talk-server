@@ -2,8 +2,9 @@ package com.haltebogen.gittalk.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @AllArgsConstructor
 public class PaginationResponseDto<T> {
     private int totalPage;
