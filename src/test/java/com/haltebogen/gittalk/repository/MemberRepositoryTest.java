@@ -1,12 +1,13 @@
 package com.haltebogen.gittalk.repository;
 
 import com.haltebogen.gittalk.entity.Member;
-import com.haltebogen.gittalk.init.InitMember;
+import com.haltebogen.gittalk.init.InitInstance;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.ObjectUtils;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class MemberRepositoryTest {
     @Autowired
     MemberRepository memberRepository;
 
-    InitMember initMember = new InitMember();
+    InitInstance initMember = new InitInstance();
 
     @Nested
     @DisplayName("멤버 생성 테스트")
@@ -37,6 +38,13 @@ public class MemberRepositoryTest {
             targetMember.ifPresent(presentedMember -> {
                 assertThat(presentedMember).isEqualTo(joinedMember);
             });
+        }
+
+        @Test
+        @DisplayName("Member 의 toString 이 성공한다.")
+        public void test_to_string_성공() {
+            Member member = initMember.createMember();
+            assertThat(ObjectUtils.identityToString(member)).isEqualTo(member.toString());
         }
     }
 
