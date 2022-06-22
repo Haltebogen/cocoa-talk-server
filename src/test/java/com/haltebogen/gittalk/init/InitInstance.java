@@ -6,8 +6,12 @@ import com.haltebogen.gittalk.entity.ProviderType;
 
 public class InitInstance {
 
-    private final String nickName = "git-talk-admin";
-    private final String company = "git-talk";
+    private final String NICKNAME = "git-talk-admin";
+    private final String COMPANY = "git-talk";
+    private final String FOLLOWERS_URL = "https://github.com/followers-url";
+    private final String FOLLOWING_URL = "https://github.com/following-url";
+    private final String NAME = "sehoon";
+    private final String BIO = "안녕하세요!! 백엔드 개발자 입니다!";
 
     //    private final
     public Member createMember() {
@@ -15,23 +19,25 @@ public class InitInstance {
                 .providerId(1L)
                 .providerType(ProviderType.GITHUB)
                 .email("test@gitnub.com")
-                .nickName("git-talk-admin")
-                .company("gittalk")
-                .followersUrl("https://github.com/followers-url")
-                .followingUrl("https://github.com/follwing-url").build();
+                .nickName(NICKNAME)
+                .name(NAME)
+                .bio(BIO)
+                .company(COMPANY)
+                .followersUrl(FOLLOWERS_URL)
+                .followingUrl(FOLLOWING_URL).build();
     }
 
     public GithubUserResponseDto createGithubUserResponseDto() {
         GithubUserResponseDto githubUserResponseDto = GithubUserResponseDto.builder()
-                .bio("프런트 개발자 입니다!!")
+                .bio(BIO)
                 .id(1234L)
-                .login("admin")
-                .company("gittalk")
-                .followers_url("https://github.com/followers-url")
-                .followings_url("https://github.com/follwing-url")
+                .login(NICKNAME)
+                .company(COMPANY)
+                .followers_url(FOLLOWERS_URL)
+                .followings_url(FOLLOWING_URL)
                 .followings(10L)
                 .followers(20L)
-                .name("git-talk-admin").build();
+                .name(NAME).build();
         return githubUserResponseDto;
     }
 }
