@@ -27,9 +27,7 @@ public class Member extends BaseAuditEntity{
     private String profileImageUrl;
     private String followersUrl;
     private String followingUrl;
-
     private Long followersNum;
-
     private Long followingsNum;
 
 
@@ -40,7 +38,9 @@ public class Member extends BaseAuditEntity{
             String email,
             String nickName,
             String name,
+            String bio,
             String company,
+            String profileImageUrl,
             String followersUrl,
             String followingUrl,
             Long followersNum,
@@ -51,7 +51,9 @@ public class Member extends BaseAuditEntity{
         this.email = email;
         this.nickName = nickName;
         this.name = name;
+        this.bio = bio;
         this.company = company;
+        this.profileImageUrl = profileImageUrl;
         this.followersUrl = followersUrl;
         this.followingUrl = followingUrl;
         this.followersNum = followersNum;
