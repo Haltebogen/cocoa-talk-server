@@ -2,6 +2,7 @@ package com.haltebogen.gittalk.service;
 
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
 import com.haltebogen.gittalk.entity.Member;
+import com.haltebogen.gittalk.entity.ProviderType;
 import com.haltebogen.gittalk.init.InitInstance;
 import com.haltebogen.gittalk.repository.MemberRepository;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,6 +37,13 @@ public class MemberServiceTest {
             assertThat(githubUserResponseDto.getBio()).isEqualTo(member.getBio());
             assertThat(githubUserResponseDto.getName()).isEqualTo(member.getName());
             assertThat(githubUserResponseDto.getLogin()).isEqualTo(member.getNickName());
+            assertThat(githubUserResponseDto.getCompany()).isEqualTo(member.getCompany());
+            assertThat(githubUserResponseDto.getFollowers()).isEqualTo(member.getFollowersNum());
+            assertThat(githubUserResponseDto.getFollowings()).isEqualTo(member.getFollowingsNum());
+            assertThat(githubUserResponseDto.getFollowers_url()).isEqualTo(member.getFollowersUrl());
+            assertThat(githubUserResponseDto.getFollowings_url()).isEqualTo(member.getFollowingUrl());
+            assertThat(ProviderType.GITHUB).isEqualTo(member.getProviderType());
+            assertThat(githubUserResponseDto.getId()).isEqualTo(member.getProviderId());
         }
     }
 
