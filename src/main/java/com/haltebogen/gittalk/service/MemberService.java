@@ -23,7 +23,7 @@ public class MemberService {
 
     public Member createMember(GithubUserResponseDto githubUserResponseDto) {
         if (!isExistMember(githubUserResponseDto)) {
-            return Member.builder()
+            Member member = Member.builder()
                     .providerId(githubUserResponseDto.getId())
                     .providerType(ProviderType.GITHUB)
                     .email("null")
@@ -34,6 +34,8 @@ public class MemberService {
                     .followingUrl(githubUserResponseDto.getFollowings_url())
                     .followersNum(githubUserResponseDto.getFollowers())
                     .followingsNum(githubUserResponseDto.getFollowings()).build();
+            memberRepository.save(member);
+            return member;
         }
 
         return memberRepository.findByProviderId(githubUserResponseDto.getId()).get();
