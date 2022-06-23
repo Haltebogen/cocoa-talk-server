@@ -63,4 +63,12 @@ public class InitInstance {
 
         return tokenDto;
     }
+
+    public String createPaginationResponse(int totalPage, boolean hasNext) {
+       String result = String.format(
+                "{\"data\":{\"totalPage\":%s,\"hasNext\":%s,\"data\":[{\"email\":\"test@gitnub.com\",\"nickName\":\"git-talk-admin\",\"profileImageUrl\":null,\"statusMessage\":null}]},\"message\":\"ok\",\"status\":200}\n"
+                , totalPage, hasNext
+        );
+        return result;
+    }
 }
