@@ -15,12 +15,25 @@ public class InitInstance {
     private final String BIO = "안녕하세요!! 백엔드 개발자 입니다!";
 
     //    private final
-    public Member createMember() {
+    public Member createDefaultMember() {
         return Member.builder()
                 .providerId(1L)
                 .providerType(ProviderType.GITHUB)
                 .email("test@gitnub.com")
                 .nickName(NICKNAME)
+                .name(NAME)
+                .bio(BIO)
+                .company(COMPANY)
+                .followersUrl(FOLLOWERS_URL)
+                .followingUrl(FOLLOWING_URL).build();
+    }
+
+    public Member createCustomMember(Long providerId, String nickName) {
+        return Member.builder()
+                .providerId(providerId)
+                .providerType(ProviderType.GITHUB)
+                .email("test@gitnub.com")
+                .nickName(nickName)
                 .name(NAME)
                 .bio(BIO)
                 .company(COMPANY)
