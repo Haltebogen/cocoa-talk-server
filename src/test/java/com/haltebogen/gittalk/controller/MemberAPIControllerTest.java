@@ -35,7 +35,7 @@ public class MemberAPIControllerTest {
     class TestSearchMember {
         @Test
         @Transactional
-        @DisplayName("이름으로 멤버 검색이 된다.")
+        @DisplayName("이름으로 멤버 검색이 된다. - 결과가 있을 때")
         public void test_search_member_exist_성공() throws Exception {
             //given
             Member member = initInstance.createDefaultMember();
@@ -46,6 +46,21 @@ public class MemberAPIControllerTest {
             mvc.perform(get(String.format("/member/search?keyword=%s", keyword)))
                     .andExpect(status().isOk())
                     .andExpect(content().json(response));
+        }
+
+        @Test
+        @Transactional
+        @DisplayName("이름으로 멤버 검색이 된다. - 결과가 없을 때")
+        public void test_search_member_not_exist_성공() throws Exception {
+            Member member = initInstance.createDefaultMember();
+
+            memberRepository.save(member);
+            String keyword = "oereo";
+
+            mvc.perform(get(String.format("/member/search?keyword=%s", keyword)))
+                    .andExpect(status().isOk())
+                    .andExpect(content().json("{}"));
+
         }
     }
 }
