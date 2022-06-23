@@ -3,19 +3,16 @@ package com.haltebogen.gittalk.controller;
 import com.haltebogen.gittalk.entity.Member;
 import com.haltebogen.gittalk.init.InitInstance;
 import com.haltebogen.gittalk.repository.MemberRepository;
-import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import javax.transaction.Transactional;
 
@@ -60,6 +57,26 @@ public class MemberAPIControllerTest {
             mvc.perform(get(String.format("/member/search?keyword=%s", keyword)))
                     .andExpect(status().isOk())
                     .andExpect(content().json("{}"));
+
+        }
+
+        @Test
+        @Transactional
+        @DisplayName("이름으로 멤버 검색이 2개 이상 존재한다. - 결과가 있을 때")
+        public void test_search_member_exist_more_page_성공() throws Exception {
+            Member member1 = initInstance.createCustomMember(1L, "git-talk-admin");
+            Member member2 = initInstance.createCustomMember(2L, "git-talk");
+            String response = initInstance.createPaginationResponse(2, true);
+            memberRepository.save(member1);
+            memberRepository.save(member2);
+
+            String keyword = "git-talk";
+
+            mvc.perform(get(String.format("/member/search?keyword=%s&size=1", keyword)))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.totalPage").value(2))
+                    .andExpect(jsonPath("$.data.hasNext").value(true));
+
 
         }
     }

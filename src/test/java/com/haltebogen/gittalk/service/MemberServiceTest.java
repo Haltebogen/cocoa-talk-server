@@ -36,6 +36,7 @@ public class MemberServiceTest {
             Member member = memberService.createMember(githubUserResponseDto);
 
             assertThat(githubUserResponseDto.getBio()).isEqualTo(member.getBio());
+            assertThat(githubUserResponseDto.getAvatar_url()).isEqualTo(member.getProfileImageUrl());
             assertThat(githubUserResponseDto.getName()).isEqualTo(member.getName());
             assertThat(githubUserResponseDto.getLogin()).isEqualTo(member.getNickName());
             assertThat(githubUserResponseDto.getCompany()).isEqualTo(member.getCompany());

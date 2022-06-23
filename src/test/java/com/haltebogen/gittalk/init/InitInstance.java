@@ -44,6 +44,7 @@ public class InitInstance {
     public GithubUserResponseDto createGithubUserResponseDto(Long id) {
         GithubUserResponseDto githubUserResponseDto = GithubUserResponseDto.builder()
                 .bio(BIO)
+                .avatar_url("https://github.com/profile-image")
                 .id(id)
                 .login(NICKNAME)
                 .company(COMPANY)
