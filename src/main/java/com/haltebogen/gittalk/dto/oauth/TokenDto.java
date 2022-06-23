@@ -1,4 +1,4 @@
-package com.haltebogen.gittalk.dto;
+package com.haltebogen.gittalk.dto.oauth;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,8 +1,7 @@
 package com.haltebogen.gittalk.service;
 
-import com.haltebogen.gittalk.dto.TokenDto;
+import com.haltebogen.gittalk.dto.oauth.TokenDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
-import com.haltebogen.gittalk.repository.MemberRepository;
 import com.haltebogen.gittalk.trace.Trace;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
