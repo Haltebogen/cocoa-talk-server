@@ -22,5 +22,5 @@ public class BaseAuditEntity {
     private LocalDateTime modifiedAt;
 
     @Column(columnDefinition = "boolean default false")
-    private Boolean isRemoved;
+    private Boolean isRemoved = false;
 }

@@ -25,7 +25,7 @@ public class MemberAPIController {
     private final MemberService memberService;
 
     @GetMapping("search")
-    public ResponseEntity<Object> searchPost(
+    public ResponseEntity<Object> searchMember(
             @PageableDefault Pageable pageable,
             @RequestParam String keyword
     ) {
