@@ -41,7 +41,7 @@ public class MemberAPIControllerTest {
             memberRepository.save(member);
             String keyword = "git-talk-admin";
 
-            mvc.perform(get(String.format("/member/search?keyword=%s", keyword)))
+            mvc.perform(get(String.format("/api/v1/member/search?keyword=%s", keyword)))
                     .andExpect(status().isOk())
                     .andExpect(content().json(response));
         }
@@ -55,7 +55,7 @@ public class MemberAPIControllerTest {
             memberRepository.save(member);
             String keyword = "oereo";
 
-            mvc.perform(get(String.format("/member/search?keyword=%s", keyword)))
+            mvc.perform(get(String.format("/api/v1/member/search?keyword=%s", keyword)))
                     .andExpect(status().isOk())
                     .andExpect(content().json("{}"));
         }
@@ -71,7 +71,7 @@ public class MemberAPIControllerTest {
 
             String keyword = "git-talk";
 
-            mvc.perform(get(String.format("/member/search?keyword=%s&size=1", keyword)))
+            mvc.perform(get(String.format("/api/v1/member/search?keyword=%s&size=1", keyword)))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.totalPage").value(2))
                     .andExpect(jsonPath("$.data.hasNext").value(true));
@@ -86,7 +86,7 @@ public class MemberAPIControllerTest {
             memberRepository.save(member);
             String keyword = "git-talk-admin";
 
-            mvc.perform(get(String.format("/member/search", keyword)))
+            mvc.perform(get(String.format("/api/v1/member/search", keyword)))
                     .andExpect(status().isBadRequest());
         }
     }

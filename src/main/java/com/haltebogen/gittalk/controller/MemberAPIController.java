@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("api/v1/member")
 public class MemberAPIController {
     private final MemberService memberService;
 
