@@ -1,5 +1,6 @@
 package com.haltebogen.gittalk.init;
 
+import com.haltebogen.gittalk.dto.TokenDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
 import com.haltebogen.gittalk.entity.Member;
 import com.haltebogen.gittalk.entity.ProviderType;
@@ -27,10 +28,10 @@ public class InitInstance {
                 .followingUrl(FOLLOWING_URL).build();
     }
 
-    public GithubUserResponseDto createGithubUserResponseDto() {
+    public GithubUserResponseDto createGithubUserResponseDto(Long id) {
         GithubUserResponseDto githubUserResponseDto = GithubUserResponseDto.builder()
                 .bio(BIO)
-                .id(1234L)
+                .id(id)
                 .login(NICKNAME)
                 .company(COMPANY)
                 .followers_url(FOLLOWERS_URL)
@@ -39,5 +40,14 @@ public class InitInstance {
                 .followers(20L)
                 .name(NAME).build();
         return githubUserResponseDto;
+    }
+
+    public TokenDto createTokenDto() {
+        TokenDto tokenDto = TokenDto.builder()
+                .access_token("access_token")
+                .token_type("bearer")
+                .scope("").build();
+
+        return tokenDto;
     }
 }
