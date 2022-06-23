@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -57,7 +58,6 @@ public class MemberAPIControllerTest {
             mvc.perform(get(String.format("/member/search?keyword=%s", keyword)))
                     .andExpect(status().isOk())
                     .andExpect(content().json("{}"));
-
         }
 
         @Test
@@ -75,8 +75,6 @@ public class MemberAPIControllerTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.totalPage").value(2))
                     .andExpect(jsonPath("$.data.hasNext").value(true));
-
-
         }
 
         @Test

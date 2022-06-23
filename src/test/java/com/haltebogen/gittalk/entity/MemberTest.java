@@ -26,6 +26,7 @@ public class MemberTest {
     void setup() {
         memberRepository.save(member);
     }
+
     @AfterEach
     void afterSetup() {
         memberRepository.delete(member);

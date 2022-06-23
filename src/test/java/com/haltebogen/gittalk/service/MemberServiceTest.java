@@ -5,12 +5,15 @@ import com.haltebogen.gittalk.entity.Member;
 import com.haltebogen.gittalk.entity.ProviderType;
 import com.haltebogen.gittalk.init.InitInstance;
 import com.haltebogen.gittalk.repository.MemberRepository;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -62,5 +65,4 @@ public class MemberServiceTest {
             assertThat(member.size()).isEqualTo(1);
         }
     }
-
 }

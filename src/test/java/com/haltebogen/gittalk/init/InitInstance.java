@@ -14,7 +14,6 @@ public class InitInstance {
     private final String NAME = "sehoon";
     private final String BIO = "안녕하세요!! 백엔드 개발자 입니다!";
 
-    //    private final
     public Member createDefaultMember() {
         return Member.builder()
                 .providerId(1L)
@@ -66,7 +65,7 @@ public class InitInstance {
     }
 
     public String createPaginationResponse(int totalPage, boolean hasNext) {
-       String result = String.format(
+        String result = String.format(
                 "{\"data\":{\"totalPage\":%s,\"hasNext\":%s,\"data\":[{\"email\":\"test@gitnub.com\",\"nickName\":\"git-talk-admin\",\"profileImageUrl\":null,\"statusMessage\":null}]},\"message\":\"ok\",\"status\":200}\n"
                 , totalPage, hasNext
         );
