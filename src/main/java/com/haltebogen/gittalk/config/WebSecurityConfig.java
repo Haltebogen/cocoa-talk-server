@@ -1,6 +1,7 @@
 package com.haltebogen.gittalk.config;
 
 import com.haltebogen.gittalk.config.jwt.JwtAuthenticationEntryPoint;
+import com.haltebogen.gittalk.config.jwt.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -18,6 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtTokenFilter jwtTokenFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -40,6 +43,10 @@ public class WebSecurityConfig {
                 .antMatchers("/api/v1/auth/login").permitAll()
                 .antMatchers("/api/v1/").authenticated()
                 .anyRequest().authenticated().and()
+                .addFilterBefore(
+                        jwtTokenFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                )
                 .build(); // 권한 설정
     }
 }
