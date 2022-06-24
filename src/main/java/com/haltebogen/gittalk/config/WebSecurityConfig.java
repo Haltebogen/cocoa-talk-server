@@ -1,6 +1,8 @@
 package com.haltebogen.gittalk.config;
 
+import com.haltebogen.gittalk.config.jwt.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
@@ -27,7 +31,8 @@ public class WebSecurityConfig {
         return http
                 .cors().and()
                 .csrf().disable() //csrf
-                .exceptionHandling().and()// 예외처리
+                .exceptionHandling().
+                authenticationEntryPoint(jwtAuthenticationEntryPoint).and()// 예외처리
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -37,6 +42,4 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated().and()
                 .build(); // 권한 설정
     }
-
-
 }
