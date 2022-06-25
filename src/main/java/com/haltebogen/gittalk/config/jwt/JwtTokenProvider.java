@@ -1,5 +1,6 @@
 package com.haltebogen.gittalk.config.jwt;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,15 @@ public class JwtTokenProvider {
                 .setExpiration(getExpirationDate(REFRESH_TOKEN_EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, getJwtSecretKey())
                 .compact();
+    }
+
+    public String getUserFromJwt(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(getJwtSecretKey())
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
     }
 
     private String getJwtSecretKey() {
