@@ -39,14 +39,14 @@ public class WebSecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
-                .antMatchers("/api/v1/auth/login").permitAll()
-                .antMatchers("/api/v1/").authenticated()
-                .anyRequest().authenticated().and()
                 .addFilterBefore(
                         jwtTokenFilter,
                         UsernamePasswordAuthenticationFilter.class
                 )
+                .authorizeRequests()
+                .antMatchers("/api/v1/auth/login").permitAll()
+                .antMatchers("/api/v1/").authenticated()
+                .anyRequest().authenticated().and()
                 .build(); // 권한 설정
     }
 }
