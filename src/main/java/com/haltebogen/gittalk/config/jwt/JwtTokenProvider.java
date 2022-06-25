@@ -45,22 +45,26 @@ public class JwtTokenProvider {
         return claims.getSubject();
     }
 
-    public boolean isValidToken(String token) {
+    public JwtValidationType validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(getJwtSecretKey()).parseClaimsJws(token);
-            return true;
+            return JwtValidationType.VALID_JWT;
         } catch (SignatureException ex) {
-            log.error("Invalid JWT signature");
+            log.error(String.valueOf(JwtValidationType.INVALID_JWT_SIGNATURE));
+            return JwtValidationType.INVALID_JWT_SIGNATURE;
         } catch (MalformedJwtException ex) {
-            log.error("Invalid JWT token");
+            log.error(String.valueOf(JwtValidationType.INVALID_JWT_TOKEN));
+            return JwtValidationType.INVALID_JWT_TOKEN;
         } catch (ExpiredJwtException ex) {
-            log.error("Expired JWT token");
+            log.error(String.valueOf(JwtValidationType.EXPIRED_JWT_TOKEN));
+            return JwtValidationType.EXPIRED_JWT_TOKEN;
         } catch (UnsupportedJwtException ex) {
-            log.error("Unsupported JWT token");
+            log.error(String.valueOf(JwtValidationType.UNSUPPORTED_JWT_TOKEN));
+            return JwtValidationType.UNSUPPORTED_JWT_TOKEN;
         } catch (IllegalArgumentException ex) {
-            log.error("JWT claims string is empty.");
+            log.error(String.valueOf(JwtValidationType.EMPTY_JWT));
+            return JwtValidationType.EMPTY_JWT;
         }
-        return false;
     }
 
     private String getJwtSecretKey() {
