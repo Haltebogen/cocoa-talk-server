@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/v1/auth")
 public class AuthController {
 
     private final MemberService memberService;

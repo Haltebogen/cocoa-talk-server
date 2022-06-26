@@ -43,10 +43,10 @@ public class WebSecurityConfig {
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .authorizeRequests()
-                .antMatchers("/auth/login").permitAll()
+                .antMatchers("api/v1/auth/login").permitAll()
                 .antMatchers("/github").permitAll()  // 삭제 예정
                 .antMatchers("/auth/github/callback").permitAll() // 삭제 예정
-                .antMatchers("/api/v1/").authenticated()
+                .antMatchers("/api/v1/**").authenticated()
                 .anyRequest().authenticated().and()
                 .build(); // 권한 설정
     }
