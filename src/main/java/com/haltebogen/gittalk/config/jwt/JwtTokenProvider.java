@@ -20,7 +20,7 @@ public class JwtTokenProvider {
 
     public String generateAccessToken(Authentication authentication) {
         return Jwts.builder()
-                .setSubject((String) authentication.getPrincipal())
+                .setSubject(String.valueOf(authentication.getPrincipal()))
                 .setIssuedAt(new Date())
                 .setExpiration(getExpirationDate(ACCESS_TOKEN_EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, getJwtSecretKey())
@@ -29,7 +29,7 @@ public class JwtTokenProvider {
 
     public String generateRefreshToken(Authentication authentication) {
         return Jwts.builder()
-                .setSubject((String) authentication.getPrincipal())
+                .setSubject(String.valueOf(authentication.getPrincipal()))
                 .setIssuedAt(new Date())
                 .setExpiration(getExpirationDate(REFRESH_TOKEN_EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, getJwtSecretKey())
@@ -42,7 +42,7 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
 
-        return Long.parseLong(claims.getSubject());
+        return Long.valueOf(claims.getSubject());
     }
 
     public JwtValidationType validateToken(String token) {
