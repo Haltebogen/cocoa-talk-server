@@ -3,7 +3,6 @@ package com.haltebogen.gittalk.config;
 import com.haltebogen.gittalk.config.jwt.JwtAuthenticationEntryPoint;
 import com.haltebogen.gittalk.config.jwt.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,7 +43,9 @@ public class WebSecurityConfig {
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/login").permitAll()
+                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/github").permitAll()  // 삭제 예정
+                .antMatchers("/auth/github/callback").permitAll() // 삭제 예정
                 .antMatchers("/api/v1/").authenticated()
                 .anyRequest().authenticated().and()
                 .build(); // 권한 설정

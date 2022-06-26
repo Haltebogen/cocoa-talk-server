@@ -34,8 +34,9 @@ public class OauthController {
     @RequestMapping("/auth/github/callback")
     public String getCallbackView(String code) {
         TokenDto tokenDto = oAuthService.getAccessTokenDto(code);
-        GithubUserResponseDto githubUserResponseDto = oAuthService.getGithubUserData(tokenDto);
-        Member member = memberService.createMember(githubUserResponseDto);
+        log.info("tokenDto: {}, {}, {}", tokenDto.getAccess_token(), tokenDto.getToken_type(), tokenDto.getScope());
+//        GithubUserResponseDto githubUserResponseDto = oAuthService.getGithubUserData(tokenDto);
+//        Member member = memberService.createMember(githubUserResponseDto);
         return "callback";
     }
 }
