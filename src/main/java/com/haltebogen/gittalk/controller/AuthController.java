@@ -1,7 +1,5 @@
 package com.haltebogen.gittalk.controller;
 
-import com.haltebogen.gittalk.dto.PaginationResponseDto;
-import com.haltebogen.gittalk.dto.member.MemberResponseDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
 import com.haltebogen.gittalk.dto.oauth.JwtTokenDto;
 import com.haltebogen.gittalk.dto.oauth.TokenDto;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
