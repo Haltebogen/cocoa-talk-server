@@ -7,11 +7,11 @@ import java.util.List;
 
 public class UserAuthentication extends UsernamePasswordAuthenticationToken {
 
-    public UserAuthentication(String principal, String credentials) {
+    public UserAuthentication(Long principal, String credentials) {
         super(principal, credentials);
     }
 
-    public UserAuthentication(String principal, String credentials,
+    public UserAuthentication(Long principal, String credentials,
                               List<GrantedAuthority> authorities) {
         super(principal, credentials, authorities);
     }

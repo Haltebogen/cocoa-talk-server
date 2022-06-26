@@ -36,13 +36,13 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String getUserFromJwt(String token) {
+    public Long getUserFromJwt(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(getJwtSecretKey())
                 .parseClaimsJws(token)
                 .getBody();
 
-        return claims.getSubject();
+        return Long.parseLong(claims.getSubject());
     }
 
     public JwtValidationType validateToken(String token) {
