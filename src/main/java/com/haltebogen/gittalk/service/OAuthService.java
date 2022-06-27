@@ -1,7 +1,11 @@
 package com.haltebogen.gittalk.service;
 
+import com.haltebogen.gittalk.config.jwt.JwtTokenProvider;
+import com.haltebogen.gittalk.config.jwt.UserAuthentication;
+import com.haltebogen.gittalk.dto.oauth.JwtTokenDto;
 import com.haltebogen.gittalk.dto.oauth.TokenDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
+import com.haltebogen.gittalk.entity.Member;
 import com.haltebogen.gittalk.trace.Trace;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -9,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -21,6 +26,7 @@ public class OAuthService {
     private final String GITHUB_ACCESS_TOKEN_API_URL_PATH = "https://github.com/login/oauth/access_token";
     private final Environment env;
     private final RestTemplate restTemplate;
+    private final JwtTokenProvider jwtTokenProvider;
 
     // Access Token 받는 로직
     @Deprecated
@@ -57,6 +63,18 @@ public class OAuthService {
         );
 
         return responseGithubData.getBody();
+    }
+
+    @Trace
+    public JwtTokenDto createLoginMemberJwt(Member member) {
+        Authentication authentication = new UserAuthentication(member.getId(), null, null);
+        String accessToken = jwtTokenProvider.generateAccessToken(authentication);
+        String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
+
+        return JwtTokenDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
 }
