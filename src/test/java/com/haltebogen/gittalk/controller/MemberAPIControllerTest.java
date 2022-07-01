@@ -1,5 +1,6 @@
 package com.haltebogen.gittalk.controller;
 
+import com.haltebogen.gittalk.GitTalkApplication;
 import com.haltebogen.gittalk.entity.Member;
 import com.haltebogen.gittalk.init.InitInstance;
 import com.haltebogen.gittalk.repository.MemberRepository;
@@ -13,6 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
