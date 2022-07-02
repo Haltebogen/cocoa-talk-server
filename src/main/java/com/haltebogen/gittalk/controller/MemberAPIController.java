@@ -1,6 +1,7 @@
 package com.haltebogen.gittalk.controller;
 
 import com.haltebogen.gittalk.dto.PaginationResponseDto;
+import com.haltebogen.gittalk.dto.member.GitUserProfileDto;
 import com.haltebogen.gittalk.dto.member.MemberDetailResponseDto;
 import com.haltebogen.gittalk.dto.member.MemberResponseDto;
 import com.haltebogen.gittalk.entity.Member;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -47,5 +49,12 @@ public class MemberAPIController {
         log.info("member: {}", memberId);
         MemberDetailResponseDto memberResponseDto = memberService.getMember(Long.valueOf(memberId));
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, memberResponseDto);
+    }
+
+    @GetMapping("/profiles")
+    public ResponseEntity<Object> getChatMembers(Principal principal) {
+        String memberId = principal.getName();
+        List<GitUserProfileDto> githubUsers = memberService.getChatMembers(Long.valueOf(memberId));
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, githubUsers);
     }
 }
