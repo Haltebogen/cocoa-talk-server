@@ -1,5 +1,6 @@
 package com.haltebogen.gittalk.service;
 
+import com.haltebogen.gittalk.dto.member.MemberDetailResponseDto;
 import com.haltebogen.gittalk.dto.member.MemberResponseDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
 import com.haltebogen.gittalk.entity.Member;
@@ -39,7 +40,7 @@ public class MemberService {
                     .followersUrl(githubUserResponseDto.getFollowers_url())
                     .followingUrl(githubUserResponseDto.getFollowings_url())
                     .followersNum(githubUserResponseDto.getFollowers())
-                    .followingsNum(githubUserResponseDto.getFollowings()).build();
+                    .followingsNum(githubUserResponseDto.getFollowing()).build();
             memberRepository.save(member);
             return member;
         }
@@ -53,9 +54,9 @@ public class MemberService {
         return members.stream().map(MemberResponseDto::new).collect(Collectors.toList());
     }
 
-    public MemberResponseDto getMember(Long id) {
+    public MemberDetailResponseDto getMember(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        return new MemberResponseDto(member);
+        return new MemberDetailResponseDto(member);
     }
 
     private boolean isExistMember(GithubUserResponseDto githubUserResponseDto){
