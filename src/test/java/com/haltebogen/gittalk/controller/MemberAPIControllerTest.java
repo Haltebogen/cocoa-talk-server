@@ -117,5 +117,19 @@ public class MemberAPIControllerTest {
                     .contentType("application/json"))
                     .andExpect(status().isBadRequest());
         }
+
+        @Test
+        @Transactional
+        @DisplayName("header 안에 토큰이 없을 시 401 에러를 반환한다.")
+        public void test_search_member_실패_401_error() throws Exception {
+            //given
+            GithubUserResponseDto githubUserResponseDto1 = initInstance.createGithubUserResponseDto(1L, "git-talk-admin");
+            memberService.createMember(githubUserResponseDto1);
+            String keyword = "git-talk-admin";
+
+            mvc.perform(get(String.format("/api/v1/member/search", keyword))
+                            .contentType("application/json"))
+                    .andExpect(status().isUnauthorized());
+        }
     }
 }
