@@ -40,12 +40,12 @@ public class InitInstance {
                 .followingUrl(FOLLOWING_URL).build();
     }
 
-    public GithubUserResponseDto createGithubUserResponseDto(Long id) {
+    public GithubUserResponseDto createGithubUserResponseDto(Long id, String nickName) {
         GithubUserResponseDto githubUserResponseDto = GithubUserResponseDto.builder()
                 .bio(BIO)
                 .avatar_url("https://github.com/profile-image")
                 .id(id)
-                .login(NICKNAME)
+                .login(nickName)
                 .company(COMPANY)
                 .followers_url(FOLLOWERS_URL)
                 .followings_url(FOLLOWING_URL)

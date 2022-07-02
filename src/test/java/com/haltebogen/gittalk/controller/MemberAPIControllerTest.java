@@ -49,7 +49,7 @@ public class MemberAPIControllerTest {
         @DisplayName("이름으로 멤버 검색이 된다. - 결과가 있을 때")
         public void test_search_member_exist_성공() throws Exception {
             //given
-            GithubUserResponseDto githubUserResponseDto = initInstance.createGithubUserResponseDto(1L);
+            GithubUserResponseDto githubUserResponseDto = initInstance.createGithubUserResponseDto(1L, "git-talk-admin");
             Member member = memberService.createMember(githubUserResponseDto);
             JwtTokenDto jwtTokenDto = oAuthService.createLoginMemberJwt(member);
             String accessToken = jwtTokenDto.getAccessToken();
@@ -63,35 +63,40 @@ public class MemberAPIControllerTest {
 
             MockHttpServletResponse mockHttpServletResponse= mvcResult.getResponse();
             assertThat(mockHttpServletResponse.getContentAsString()).isEqualTo(response);
-
         }
 
         @Test
         @Transactional
         @DisplayName("이름으로 멤버 검색이 된다. - 결과가 없을 때")
         public void test_search_member_not_exist_성공() throws Exception {
-            Member member = initInstance.createDefaultMember();
-
-            memberRepository.save(member);
+            GithubUserResponseDto githubUserResponseDto = initInstance.createGithubUserResponseDto(1L, "git-talk-admin");
+            Member member = memberService.createMember(githubUserResponseDto);
+            JwtTokenDto jwtTokenDto = oAuthService.createLoginMemberJwt(member);
+            String accessToken = jwtTokenDto.getAccessToken();
             String keyword = "oereo";
 
-            mvc.perform(get(String.format("/api/v1/member/search?keyword=%s", keyword)))
+            mvc.perform(get(String.format("/api/v1/member/search?keyword=%s", keyword)).header("Authorization", "Bearer " + accessToken)
+                            .contentType("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(content().json("{}"));
+                    .andExpect(content().string("{\"data\":{\"totalPage\":0,\"hasNext\":false,\"data\":[]},\"message\":\"ok\",\"status\":200}"));
         }
 
         @Test
         @Transactional
         @DisplayName("이름으로 멤버 검색이 2개 이상 존재한다. - 결과가 있을 때")
         public void test_search_member_exist_more_page_성공() throws Exception {
-            Member member1 = initInstance.createCustomMember(1L, "git-talk-admin");
-            Member member2 = initInstance.createCustomMember(2L, "git-talk");
-            memberRepository.save(member1);
-            memberRepository.save(member2);
+            GithubUserResponseDto githubUserResponseDto1 = initInstance.createGithubUserResponseDto(1L, "git-talk-admin");
+            Member member1 = memberService.createMember(githubUserResponseDto1);
+            GithubUserResponseDto githubUserResponseDto2 = initInstance.createGithubUserResponseDto(2L, "git-talk");
+            Member member2 = memberService.createMember(githubUserResponseDto2);
+            JwtTokenDto jwtTokenDto = oAuthService.createLoginMemberJwt(member1);
+            String accessToken = jwtTokenDto.getAccessToken();
+
 
             String keyword = "git-talk";
 
-            mvc.perform(get(String.format("/api/v1/member/search?keyword=%s&size=1", keyword)))
+            mvc.perform(get(String.format("/api/v1/member/search?keyword=%s&size=1", keyword)).header("Authorization", "Bearer " + accessToken)
+                            .contentType("application/json"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.totalPage").value(2))
                     .andExpect(jsonPath("$.data.hasNext").value(true));
@@ -102,11 +107,14 @@ public class MemberAPIControllerTest {
         @DisplayName("keyword 가 없을 시에 멤버 검색이 실패한다. - 결과가 있을 때")
         public void test_search_member_exist_실패_BAD_REQUEST() throws Exception {
             //given
-            Member member = initInstance.createDefaultMember();
-            memberRepository.save(member);
+            GithubUserResponseDto githubUserResponseDto1 = initInstance.createGithubUserResponseDto(1L, "git-talk-admin");
+            Member member = memberService.createMember(githubUserResponseDto1);
+            JwtTokenDto jwtTokenDto = oAuthService.createLoginMemberJwt(member);
+            String accessToken = jwtTokenDto.getAccessToken();
             String keyword = "git-talk-admin";
 
-            mvc.perform(get(String.format("/api/v1/member/search", keyword)))
+            mvc.perform(get(String.format("/api/v1/member/search", keyword)).header("Authorization", "Bearer " + accessToken)
+                    .contentType("application/json"))
                     .andExpect(status().isBadRequest());
         }
     }
