@@ -1,9 +1,12 @@
 package com.haltebogen.gittalk.controller;
 
-import com.haltebogen.gittalk.GitTalkApplication;
+import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
+import com.haltebogen.gittalk.dto.oauth.JwtTokenDto;
 import com.haltebogen.gittalk.entity.Member;
 import com.haltebogen.gittalk.init.InitInstance;
 import com.haltebogen.gittalk.repository.MemberRepository;
+import com.haltebogen.gittalk.service.MemberService;
+import com.haltebogen.gittalk.service.OAuthService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,8 +17,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 import javax.transaction.Transactional;
 
@@ -27,6 +33,11 @@ public class MemberAPIControllerTest {
     MockMvc mvc;
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private OAuthService oAuthService;
+
+    @Autowired
+    private MemberService memberService;
 
     InitInstance initInstance = new InitInstance();
 
@@ -38,14 +49,21 @@ public class MemberAPIControllerTest {
         @DisplayName("이름으로 멤버 검색이 된다. - 결과가 있을 때")
         public void test_search_member_exist_성공() throws Exception {
             //given
-            Member member = initInstance.createDefaultMember();
+            GithubUserResponseDto githubUserResponseDto = initInstance.createGithubUserResponseDto(1L);
+            Member member = memberService.createMember(githubUserResponseDto);
+            JwtTokenDto jwtTokenDto = oAuthService.createLoginMemberJwt(member);
+            String accessToken = jwtTokenDto.getAccessToken();
             String response = initInstance.createPaginationResponse(1, false);
-            memberRepository.save(member);
             String keyword = "git-talk-admin";
 
-            mvc.perform(get(String.format("/api/v1/member/search?keyword=%s", keyword)))
+            MvcResult mvcResult = mvc.perform(get(String.format("/api/v1/member/search?keyword=%s", keyword)).header("Authorization", "Bearer " + accessToken)
+                            .contentType("application/json"))
                     .andExpect(status().isOk())
-                    .andExpect(content().json(response));
+                    .andReturn();
+
+            MockHttpServletResponse mockHttpServletResponse= mvcResult.getResponse();
+            assertThat(mockHttpServletResponse.getContentAsString()).isEqualTo(response);
+
         }
 
         @Test
