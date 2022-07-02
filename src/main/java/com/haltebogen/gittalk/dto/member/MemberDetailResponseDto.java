@@ -15,6 +15,7 @@ public class MemberDetailResponseDto {
     private String company;
     private Long followersNum;
     private Long followingsNum;
+
     public MemberDetailResponseDto(Member member) {
         this.email = member.getEmail();
         this.name = member.getName();
