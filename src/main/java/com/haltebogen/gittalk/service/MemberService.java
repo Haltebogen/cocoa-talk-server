@@ -1,5 +1,6 @@
 package com.haltebogen.gittalk.service;
 
+import com.haltebogen.gittalk.dto.member.MemberResponseDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
 import com.haltebogen.gittalk.entity.Member;
 import com.haltebogen.gittalk.entity.ProviderType;
@@ -9,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -44,11 +48,15 @@ public class MemberService {
 
     }
 
+    public List<MemberResponseDto> getMembers() {
+        List<Member> members = memberRepository.findAll();
+        return members.stream().map(MemberResponseDto::new).collect(Collectors.toList());
+    }
+
     private boolean isExistMember(GithubUserResponseDto githubUserResponseDto){
         Long githubUserId = githubUserResponseDto.getId();
 
         return memberRepository.findByProviderId(githubUserId).isPresent();
-
     }
 
 }
