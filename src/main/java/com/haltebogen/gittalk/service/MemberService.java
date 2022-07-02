@@ -53,6 +53,11 @@ public class MemberService {
         return members.stream().map(MemberResponseDto::new).collect(Collectors.toList());
     }
 
+    public MemberResponseDto getMember(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return new MemberResponseDto(member);
+    }
+
     private boolean isExistMember(GithubUserResponseDto githubUserResponseDto){
         Long githubUserId = githubUserResponseDto.getId();
 
