@@ -40,12 +40,12 @@ public class InitInstance {
                 .followingUrl(FOLLOWING_URL).build();
     }
 
-    public GithubUserResponseDto createGithubUserResponseDto(Long id) {
+    public GithubUserResponseDto createGithubUserResponseDto(Long id, String nickName) {
         GithubUserResponseDto githubUserResponseDto = GithubUserResponseDto.builder()
                 .bio(BIO)
                 .avatar_url("https://github.com/profile-image")
                 .id(id)
-                .login(NICKNAME)
+                .login(nickName)
                 .company(COMPANY)
                 .followers_url(FOLLOWERS_URL)
                 .followings_url(FOLLOWING_URL)
@@ -66,7 +66,7 @@ public class InitInstance {
 
     public String createPaginationResponse(int totalPage, boolean hasNext) {
         String result = String.format(
-                "{\"data\":{\"totalPage\":%s,\"hasNext\":%s,\"data\":[{\"email\":\"test@gitnub.com\",\"nickName\":\"git-talk-admin\",\"profileImageUrl\":null,\"statusMessage\":null}]},\"message\":\"ok\",\"status\":200}\n"
+                "{\"data\":{\"totalPage\":%s,\"hasNext\":%s,\"data\":[{\"email\":\"null\",\"nickName\":\"git-talk-admin\",\"profileImageUrl\":\"https://github.com/profile-image\",\"statusMessage\":null}]},\"message\":\"ok\",\"status\":200}"
                 , totalPage, hasNext
         );
         return result;
