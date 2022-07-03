@@ -21,11 +21,24 @@ public class WebSecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtTokenFilter jwtTokenFilter;
 
-    // StackOverFlow error raise
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-//        return configuration.getAuthenticationManager();
-//    }
+
+    private static final String[] AUTH_WHITELIST = {
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
+
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(
@@ -47,6 +60,7 @@ public class WebSecurityConfig {
                 .antMatchers("/auth/login").permitAll()
                 .antMatchers("/github").permitAll()  // 삭제 예정
                 .antMatchers("/auth/github/callback").permitAll() // 삭제 예정
+                .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/api/v1/**").authenticated()
                 .anyRequest().authenticated().and()
                 .build(); // 권한 설정

@@ -5,6 +5,11 @@ import com.haltebogen.gittalk.dto.member.MemberResponseDto;
 import com.haltebogen.gittalk.entity.Member;
 import com.haltebogen.gittalk.response.ResponseHandler;
 import com.haltebogen.gittalk.service.MemberService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +29,12 @@ import java.util.stream.Collectors;
 public class MemberAPIController {
     private final MemberService memberService;
 
-    @GetMapping("search")
+    @Operation(summary="멤버 검색", description = "키워드를 이용해서, 멤버를 검색할 수 있다.")
+    @ApiResponses({
+            @ApiResponse(code=200, message = "OK"),
+            @ApiResponse(code=500, message = "Server Error")
+    })
+    @GetMapping("/search")
     public ResponseEntity<Object> searchMember(
             @PageableDefault Pageable pageable,
             @RequestParam String keyword
