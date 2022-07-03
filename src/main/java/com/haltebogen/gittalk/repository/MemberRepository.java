@@ -19,6 +19,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByProviderId(Long providerId);
 
     boolean existsByEmail(String email);
+    boolean existsByProviderId(Long providerId);
 
     @Query("select m from Member m " +
             "where m.nickName like %:keyword% or m.email like %:keyword% " +
