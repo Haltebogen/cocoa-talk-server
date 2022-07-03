@@ -62,20 +62,49 @@ public class MemberService {
         return memberRepository.findByProviderId(githubUserResponseDto.getId()).get();
     }
 
-    public List<GitUserProfileDto> getChatMembers(Long id) {
-        List<GitUserProfileDto> allGithubProfiles = new ArrayList<>();
+    public List<ChatMemberResponseDto> getChatMembers(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         List<GitUserProfileDto> gitFollowerProfiles = getGitHubFollowers(member.getNickName());
+        List<ChatMemberResponseDto> chatFollowerChatMembers = createFollowerChatMemberResponseDto(gitFollowerProfiles);
         List<GitUserProfileDto> gitFollowingProfiles = getGitHubFollowings(member.getNickName());
-        allGithubProfiles.addAll(gitFollowerProfiles);
-        allGithubProfiles.addAll(gitFollowingProfiles);
+        List<ChatMemberResponseDto> chatAllChatMembers = createFollowingChatMemberResponseDto(gitFollowingProfiles, chatFollowerChatMembers);
 
-        return gitFollowerProfiles;
+        return chatAllChatMembers;
     }
 
     public MemberDetailResponseDto getMember(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         return new MemberDetailResponseDto(member);
+    }
+
+    private List<ChatMemberResponseDto> createFollowingChatMemberResponseDto(
+            List<GitUserProfileDto> profiles, List<ChatMemberResponseDto> chatFollowerProfiles) {
+
+        for (GitUserProfileDto profile:profiles
+             ) {
+            for (ChatMemberResponseDto chatMember: chatFollowerProfiles ) {
+                if (profile.getId().equals(chatMember.getProviderId())) {
+                    chatMember.updateIsFollowing(true);
+                }
+            }
+        }
+        return chatFollowerProfiles;
+    }
+
+    private List<ChatMemberResponseDto> createFollowerChatMemberResponseDto(List<GitUserProfileDto> profiles) {
+        List<ChatMemberResponseDto> chatFollowerProfiles = new ArrayList<>();
+
+        for (GitUserProfileDto profile:profiles
+             ) {
+            ChatMemberResponseDto chatMemberResponseDto = ChatMemberResponseDto.builder()
+                    .member(profile)
+                    .isFollower(true)
+                    .isFollowing(false)
+                    .isMember(false)
+                    .build();
+            chatFollowerProfiles.add(chatMemberResponseDto);
+        }
+        return chatFollowerProfiles;
     }
 
     private List<GitUserProfileDto> getGitHubFollowers(String name) {
