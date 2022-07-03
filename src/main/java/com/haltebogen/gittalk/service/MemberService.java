@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +33,7 @@ public class MemberService {
 
     private final String PAGINATION_PAGE_SIZE = "1000000";
     private final String GITHUB_FOLLOWERS_API_URL_PATH = "https://api.github.com/users/%s/followers?per_page=%s";
+    private final String GITHUB_FOLLOWINGS_API_URL_PATH = "https://api.github.com/users/%s/followings?per_page=%s";
 
     @Trace
     public Page<Member> findUserBySearch(Pageable pageable, String keyword) {
@@ -61,9 +63,14 @@ public class MemberService {
     }
 
     public List<GitUserProfileDto> getChatMembers(Long id) {
+        List<GitUserProfileDto> allGithubProfiles = new ArrayList<>();
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        List<GitUserProfileDto> gitUserProfiles = getGitHubFollowers(member.getNickName());
-        return gitUserProfiles;
+        List<GitUserProfileDto> gitFollowerProfiles = getGitHubFollowers(member.getNickName());
+        List<GitUserProfileDto> gitFollowingProfiles = getGitHubFollowings(member.getNickName());
+        allGithubProfiles.addAll(gitFollowerProfiles);
+        allGithubProfiles.addAll(gitFollowingProfiles);
+
+        return gitFollowerProfiles;
     }
 
     public MemberDetailResponseDto getMember(Long id) {
@@ -72,6 +79,20 @@ public class MemberService {
     }
 
     private List<GitUserProfileDto> getGitHubFollowers(String name) {
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<GitUserProfileDto[]> responseGithubData = restTemplate.exchange(
+                String.format(GITHUB_FOLLOWINGS_API_URL_PATH, name, PAGINATION_PAGE_SIZE),
+                HttpMethod.GET,
+                httpEntity,
+                GitUserProfileDto[].class
+        );
+
+        return Arrays.asList(responseGithubData.getBody());
+    }
+
+    private List<GitUserProfileDto> getGitHubFollowings(String name) {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
