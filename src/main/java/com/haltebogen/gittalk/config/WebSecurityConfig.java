@@ -21,6 +21,7 @@ public class WebSecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtTokenFilter jwtTokenFilter;
 
+
     private static final String[] AUTH_WHITELIST = {
             "/v2/api-docs",
             "/swagger-resources",
@@ -37,6 +38,7 @@ public class WebSecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
+
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(
@@ -55,7 +57,7 @@ public class WebSecurityConfig {
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .authorizeRequests()
-                .antMatchers("api/v1/auth/login").permitAll()
+                .antMatchers("/auth/login").permitAll()
                 .antMatchers("/github").permitAll()  // 삭제 예정
                 .antMatchers("/auth/github/callback").permitAll() // 삭제 예정
                 .antMatchers(AUTH_WHITELIST).permitAll()
