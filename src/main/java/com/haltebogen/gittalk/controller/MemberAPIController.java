@@ -5,6 +5,8 @@ import com.haltebogen.gittalk.dto.member.MemberResponseDto;
 import com.haltebogen.gittalk.entity.Member;
 import com.haltebogen.gittalk.response.ResponseHandler;
 import com.haltebogen.gittalk.service.MemberService;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,10 @@ import java.util.stream.Collectors;
 public class MemberAPIController {
     private final MemberService memberService;
 
+    @ApiResponses({
+            @ApiResponse(code=200, message = "OK"),
+            @ApiResponse(code=500, message = "Server Error")
+    })
     @GetMapping("search")
     public ResponseEntity<Object> searchMember(
             @PageableDefault Pageable pageable,
