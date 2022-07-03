@@ -21,7 +21,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .groupName("API V1")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.springswagger.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.haltebogen.gittalk.controller"))
                 .paths(PathSelectors.any())
                 .build().apiInfo(apiInfo());
 
