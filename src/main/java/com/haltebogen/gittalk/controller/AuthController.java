@@ -7,8 +7,10 @@ import com.haltebogen.gittalk.entity.Member;
 import com.haltebogen.gittalk.response.ResponseHandler;
 import com.haltebogen.gittalk.service.MemberService;
 import com.haltebogen.gittalk.service.OAuthService;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,7 @@ public class AuthController {
     private final OAuthService oAuthService;
 
 
+    @Operation(summary = "소셜 로그인", description = "깃허브 소셜로그인")
     @ApiResponses({
             @ApiResponse(code=200, message = "OK!"),
             @ApiResponse(code=400, message = "Bad Request!"),
