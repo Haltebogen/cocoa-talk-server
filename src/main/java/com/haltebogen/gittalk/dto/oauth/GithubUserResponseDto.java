@@ -15,7 +15,7 @@ public class GithubUserResponseDto {
     private String bio;
     private String company;
     private Long followers;
-    private Long followings;
+    private Long following;
 
     @Builder
     public GithubUserResponseDto(
@@ -28,7 +28,7 @@ public class GithubUserResponseDto {
             String bio,
             String company,
             Long followers,
-            Long followings) {
+            Long following) {
         this.id = id;
         this.login = login;
         this.avatar_url = avatar_url;
@@ -38,7 +38,7 @@ public class GithubUserResponseDto {
         this.bio = bio;
         this.company = company;
         this.followers = followers;
-        this.followings = followings;
+        this.following = following;
     }
 
 }
