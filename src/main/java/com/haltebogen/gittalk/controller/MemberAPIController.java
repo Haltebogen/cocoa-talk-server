@@ -52,6 +52,7 @@ public class MemberAPIController {
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, memberResponseDto);
     }
 
+    @Deprecated
     @GetMapping("/profiles")
     public ResponseEntity<Object> getChatMembers(
             @PageableDefault Pageable pageable,
