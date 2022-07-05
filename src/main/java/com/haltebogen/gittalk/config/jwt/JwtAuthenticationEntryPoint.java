@@ -13,7 +13,6 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private final String AUTHORIZATION_EXCEPTION_ERROR_MESSAGE = "unauthorized access token";
-    @Trace
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
             throws IOException, ServletException {
