@@ -1,8 +1,8 @@
 package com.haltebogen.gittalk.service;
 
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
-import com.haltebogen.gittalk.entity.Member;
-import com.haltebogen.gittalk.entity.ProviderType;
+import com.haltebogen.gittalk.entity.user.Member;
+import com.haltebogen.gittalk.entity.user.ProviderType;
 import com.haltebogen.gittalk.init.InitInstance;
 import com.haltebogen.gittalk.repository.MemberRepository;
 

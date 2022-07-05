@@ -2,17 +2,14 @@ package com.haltebogen.gittalk.controller;
 
 import com.haltebogen.gittalk.dto.PaginationResponseDto;
 import com.haltebogen.gittalk.dto.member.ChatMemberResponseDto;
-import com.haltebogen.gittalk.dto.member.GitUserProfileDto;
 import com.haltebogen.gittalk.dto.member.MemberDetailResponseDto;
 import com.haltebogen.gittalk.dto.member.MemberResponseDto;
-import com.haltebogen.gittalk.entity.Member;
+import com.haltebogen.gittalk.entity.user.Member;
 import com.haltebogen.gittalk.response.ResponseHandler;
 import com.haltebogen.gittalk.service.MemberService;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
