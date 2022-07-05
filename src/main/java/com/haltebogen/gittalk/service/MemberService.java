@@ -33,7 +33,7 @@ public class MemberService {
 
     private final String PAGINATION_PAGE_SIZE = "1000000";
     private final String GITHUB_FOLLOWERS_API_URL_PATH = "https://api.github.com/users/%s/followers?per_page=%s";
-    private final String GITHUB_FOLLOWINGS_API_URL_PATH = "https://api.github.com/users/%s/followings?per_page=%s";
+    private final String GITHUB_FOLLOWINGS_API_URL_PATH = "https://api.github.com/users/%s/following?per_page=%s";
 
     @Trace
     public Page<Member> findUserBySearch(Pageable pageable, String keyword) {
@@ -41,7 +41,7 @@ public class MemberService {
     }
 
     public Member createMember(GithubUserResponseDto githubUserResponseDto) {
-        if (!isExistMember(githubUserResponseDto)) {
+        if (!isExistMember(githubUserResponseDto.getId())) {
             Member member = Member.builder()
                     .providerId(githubUserResponseDto.getId())
                     .providerType(ProviderType.GITHUB)
@@ -68,8 +68,8 @@ public class MemberService {
         List<ChatMemberResponseDto> chatFollowerChatMembers = createFollowerChatMemberResponseDto(gitFollowerProfiles);
         List<GitUserProfileDto> gitFollowingProfiles = getGitHubFollowings(member.getNickName());
         List<ChatMemberResponseDto> chatAllChatMembers = createFollowingChatMemberResponseDto(gitFollowingProfiles, chatFollowerChatMembers);
-
-        return chatAllChatMembers;
+        List<ChatMemberResponseDto> result = createServiceMemberResponseDto(chatAllChatMembers);
+        return result;
     }
 
     public MemberDetailResponseDto getMember(Long id) {
@@ -77,18 +77,48 @@ public class MemberService {
         return new MemberDetailResponseDto(member);
     }
 
-    private List<ChatMemberResponseDto> createFollowingChatMemberResponseDto(
-            List<GitUserProfileDto> profiles, List<ChatMemberResponseDto> chatFollowerProfiles) {
-
-        for (GitUserProfileDto profile:profiles
+    private List<ChatMemberResponseDto> createServiceMemberResponseDto(
+            List<ChatMemberResponseDto> profiles
+    ) {
+        for (ChatMemberResponseDto profile: profiles
              ) {
-            for (ChatMemberResponseDto chatMember: chatFollowerProfiles ) {
-                if (profile.getId().equals(chatMember.getProviderId())) {
-                    chatMember.updateIsFollowing(true);
-                }
+            if (isExistMember(profile.getProviderId())) {
+                profile.updateIsMember(true);
             }
         }
-        return chatFollowerProfiles;
+        return profiles;
+    }
+    private List<ChatMemberResponseDto> createFollowingChatMemberResponseDto(
+            List<GitUserProfileDto> profiles, List<ChatMemberResponseDto> chatFollowerProfiles) {
+        List<ChatMemberResponseDto> result = new ArrayList<>();
+        Boolean isEqualFollowerWithFollowing = true;
+        GitUserProfileDto gitUserProfileDto = new GitUserProfileDto();
+
+        for (ChatMemberResponseDto chatMember:chatFollowerProfiles
+             ) {
+            isEqualFollowerWithFollowing = true;
+            for (GitUserProfileDto profile: profiles ) {
+                if (profile.getId().equals(chatMember.getProviderId())) {
+                    isEqualFollowerWithFollowing = false;
+                    gitUserProfileDto = profile;
+                    break;
+                }
+
+            }
+            if (isEqualFollowerWithFollowing) {
+                ChatMemberResponseDto chatMemberResponseDto = ChatMemberResponseDto.builder()
+                        .member(gitUserProfileDto)
+                        .isFollower(false)
+                        .isFollowing(true)
+                        .isMember(false)
+                        .build();
+                result.add(chatMemberResponseDto);
+            } else {
+                chatMember.updateIsFollowing(true);
+                result.add(chatMember);
+            }
+        }
+        return result;
     }
 
     private List<ChatMemberResponseDto> createFollowerChatMemberResponseDto(List<GitUserProfileDto> profiles) {
@@ -112,7 +142,7 @@ public class MemberService {
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         ResponseEntity<GitUserProfileDto[]> responseGithubData = restTemplate.exchange(
-                String.format(GITHUB_FOLLOWINGS_API_URL_PATH, name, PAGINATION_PAGE_SIZE),
+                String.format(GITHUB_FOLLOWERS_API_URL_PATH, name, PAGINATION_PAGE_SIZE),
                 HttpMethod.GET,
                 httpEntity,
                 GitUserProfileDto[].class
@@ -126,7 +156,7 @@ public class MemberService {
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         ResponseEntity<GitUserProfileDto[]> responseGithubData = restTemplate.exchange(
-                String.format(GITHUB_FOLLOWERS_API_URL_PATH, name, PAGINATION_PAGE_SIZE),
+                String.format(GITHUB_FOLLOWINGS_API_URL_PATH, name, PAGINATION_PAGE_SIZE),
                 HttpMethod.GET,
                 httpEntity,
                 GitUserProfileDto[].class
@@ -139,10 +169,8 @@ public class MemberService {
         List<Member> members = memberRepository.findAll();
         return members.stream().map(MemberResponseDto::new).collect(Collectors.toList());
     }
-    private boolean isExistMember(GithubUserResponseDto githubUserResponseDto){
-        Long githubUserId = githubUserResponseDto.getId();
-
-        return memberRepository.findByProviderId(githubUserId).isPresent();
+    private boolean isExistMember(Long providerId){
+        return memberRepository.existsByProviderId(providerId);
     }
 
 }

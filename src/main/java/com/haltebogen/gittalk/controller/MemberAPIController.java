@@ -1,6 +1,7 @@
 package com.haltebogen.gittalk.controller;
 
 import com.haltebogen.gittalk.dto.PaginationResponseDto;
+import com.haltebogen.gittalk.dto.member.ChatMemberResponseDto;
 import com.haltebogen.gittalk.dto.member.GitUserProfileDto;
 import com.haltebogen.gittalk.dto.member.MemberDetailResponseDto;
 import com.haltebogen.gittalk.dto.member.MemberResponseDto;
@@ -52,9 +53,12 @@ public class MemberAPIController {
     }
 
     @GetMapping("/profiles")
-    public ResponseEntity<Object> getChatMembers(Principal principal) {
+    public ResponseEntity<Object> getChatMembers(
+            @PageableDefault Pageable pageable,
+            Principal principal
+    ) {
         String memberId = principal.getName();
-        List<GitUserProfileDto> githubUsers = memberService.getChatMembers(Long.valueOf(memberId));
+        List<ChatMemberResponseDto> githubUsers = memberService.getChatMembers(Long.valueOf(memberId));
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, githubUsers);
     }
 }

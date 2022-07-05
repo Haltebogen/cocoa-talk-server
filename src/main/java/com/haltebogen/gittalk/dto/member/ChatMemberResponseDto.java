@@ -33,4 +33,8 @@ public class ChatMemberResponseDto {
     public void updateIsFollowing(Boolean isFollowing) {
         this.isFollowing = isFollowing;
     }
+
+    public void updateIsMember(Boolean isMember) {
+        this.isMember = isMember;
+    }
 }
