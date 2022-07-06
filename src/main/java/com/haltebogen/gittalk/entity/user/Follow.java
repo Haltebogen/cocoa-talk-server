@@ -32,4 +32,8 @@ public class Follow {
         this.follower = follower;
         this.followStatus = followStatus;
     }
+
+    public void updateFollowStatus(FollowStatus followStatus) {
+        this.followStatus = followStatus;
+    }
 }
