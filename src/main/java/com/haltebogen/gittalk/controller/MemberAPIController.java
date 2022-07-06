@@ -6,7 +6,7 @@ import com.haltebogen.gittalk.dto.member.MemberDetailResponseDto;
 import com.haltebogen.gittalk.dto.member.MemberResponseDto;
 import com.haltebogen.gittalk.entity.user.Member;
 import com.haltebogen.gittalk.response.ResponseHandler;
-import com.haltebogen.gittalk.service.MemberService;
+import com.haltebogen.gittalk.service.user.MemberService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;

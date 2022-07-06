@@ -1,4 +1,4 @@
-package com.haltebogen.gittalk.service;
+package com.haltebogen.gittalk.service.user;
 
 import com.haltebogen.gittalk.dto.member.ChatMemberResponseDto;
 import com.haltebogen.gittalk.dto.member.GitUserProfileDto;

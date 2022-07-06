@@ -8,6 +8,7 @@ import com.haltebogen.gittalk.repository.MemberRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.haltebogen.gittalk.service.user.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

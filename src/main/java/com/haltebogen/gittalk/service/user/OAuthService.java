@@ -1,4 +1,4 @@
-package com.haltebogen.gittalk.service;
+package com.haltebogen.gittalk.service.user;
 
 import com.haltebogen.gittalk.config.jwt.JwtTokenProvider;
 import com.haltebogen.gittalk.config.jwt.UserAuthentication;
