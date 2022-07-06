@@ -49,7 +49,7 @@ public class InitInstance {
                 .company(COMPANY)
                 .followers_url(FOLLOWERS_URL)
                 .followings_url(FOLLOWING_URL)
-                .followings(10L)
+                .following(10L)
                 .followers(20L)
                 .name(NAME).build();
         return githubUserResponseDto;
