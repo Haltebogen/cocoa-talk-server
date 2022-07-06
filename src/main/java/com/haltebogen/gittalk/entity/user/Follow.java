@@ -1,5 +1,6 @@
 package com.haltebogen.gittalk.entity.user;
 
+import com.haltebogen.gittalk.entity.BaseAuditEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Follow {
+public class Follow extends BaseAuditEntity {
 
     @Id @GeneratedValue
     @Column(name = "follow_id")
