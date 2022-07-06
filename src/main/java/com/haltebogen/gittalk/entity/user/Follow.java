@@ -21,7 +21,7 @@ public class Follow {
     private Member following;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "following_id")
+    @JoinColumn(name = "follower_id")
     private Member follower;
 
     private FollowStatus followStatus;
