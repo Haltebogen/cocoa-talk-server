@@ -40,4 +40,11 @@ public class AuthController {
         JwtTokenDto jwtTokenDto = oAuthService.createLoginMemberJwt(member);
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, jwtTokenDto);
     }
+
+    @Deprecated
+    @PostMapping("/member")
+    public ResponseEntity<Object> createMember(@RequestBody GithubUserResponseDto githubUser) {
+        Member member = memberService.createMember(githubUser);
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, member);
+    }
 }
