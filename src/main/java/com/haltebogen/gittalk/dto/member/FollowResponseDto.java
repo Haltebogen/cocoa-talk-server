@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FollowResponseDto {
 
-    private Member following;
-    private Member follower;
+    private MemberDetailResponseDto following;
+    private MemberDetailResponseDto follower;
     private FollowStatus followStatus;
 
     @Builder
-    public FollowResponseDto(Member following, Member follower, FollowStatus followStatus) {
+    public FollowResponseDto(MemberDetailResponseDto following, MemberDetailResponseDto follower, FollowStatus followStatus) {
         this.following = following;
         this.follower = follower;
         this.followStatus = followStatus;

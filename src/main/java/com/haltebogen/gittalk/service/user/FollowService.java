@@ -2,6 +2,7 @@ package com.haltebogen.gittalk.service.user;
 
 import com.haltebogen.gittalk.dto.member.FollowRequestDto;
 import com.haltebogen.gittalk.dto.member.FollowResponseDto;
+import com.haltebogen.gittalk.dto.member.MemberDetailResponseDto;
 import com.haltebogen.gittalk.entity.user.Follow;
 import com.haltebogen.gittalk.entity.user.FollowStatus;
 import com.haltebogen.gittalk.entity.user.Member;
@@ -31,8 +32,8 @@ public class FollowService {
                 .build();
         followRepository.save(follow);
         return FollowResponseDto.builder()
-                .follower(member)
-                .following(targetMember)
+                .follower(new MemberDetailResponseDto(member))
+                .following(new MemberDetailResponseDto(targetMember))
                 .followStatus(FollowStatus.PENDING)
                 .build();
     }
