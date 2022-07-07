@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class FollowRequestDto {
-    private Member following;
+    private Long following;
     private FollowStatus followStatus;
 
     @Builder
-    public FollowRequestDto(Member following, FollowStatus followStatus) {
+    public FollowRequestDto(Long following, FollowStatus followStatus) {
         this.following = following;
         this.followStatus = followStatus;
     }

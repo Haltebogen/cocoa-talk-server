@@ -20,19 +20,20 @@ public class FollowService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public FollowResponseDto createFollow(Long memberId, FollowRequestDto followTargetMember) {
+    public FollowResponseDto createFollow(Long memberId, Long followTargetMemberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
+        Member targetMember = memberRepository.findById(followTargetMemberId).orElseThrow(IllegalArgumentException::new);
+
         Follow follow = Follow.builder()
                 .follower(member)
-                .following(followTargetMember.getFollowing())
+                .following(targetMember)
                 .followStatus(FollowStatus.PENDING)
                 .build();
         followRepository.save(follow);
-        FollowResponseDto followResponseDto = FollowResponseDto.builder()
+        return FollowResponseDto.builder()
                 .follower(member)
-                .following(followTargetMember.getFollowing())
+                .following(targetMember)
                 .followStatus(FollowStatus.PENDING)
                 .build();
-        return followResponseDto;
     }
 }
