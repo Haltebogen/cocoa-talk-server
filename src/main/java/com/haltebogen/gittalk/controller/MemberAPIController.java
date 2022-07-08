@@ -70,7 +70,9 @@ public class MemberAPIController {
     }
     @GetMapping("/follows")
     public ResponseEntity<Object> getFollows(Principal principal) {
-        return ResponseHandler.generateResponse("ok", HttpStatus.OK, "");
+        String memberId = principal.getName();
+        List<MemberDetailResponseDto> followers = followService.getFollowers(Long.valueOf(memberId));
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, followers);
     }
 
     @Deprecated

@@ -42,9 +42,9 @@ public class FollowService {
     }
 
     @Transactional
-    public List<MemberResponseDto> getFollowers(Long memberId) {
+    public List<MemberDetailResponseDto> getFollowers(Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
         List<Follow> follows = followRepository.findAllByFollower(member);
-        return follows.stream().map(follow -> new MemberResponseDto(follow.getFollowing())).collect(Collectors.toList());
+        return follows.stream().map(follow -> new MemberDetailResponseDto(follow.getFollowing())).collect(Collectors.toList());
     }
 }
