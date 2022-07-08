@@ -8,6 +8,7 @@ import com.haltebogen.gittalk.service.user.FollowService;
 import com.haltebogen.gittalk.service.user.MemberService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ResponseHeader;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,6 +67,10 @@ public class MemberAPIController {
                 followRequestDto.getFollowing()
         );
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, followResponseDto);
+    }
+    @GetMapping("/follows")
+    public ResponseEntity<Object> getFollows(Principal principal) {
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, "");
     }
 
     @Deprecated
