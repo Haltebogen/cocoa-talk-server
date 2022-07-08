@@ -1,9 +1,7 @@
 package com.haltebogen.gittalk.service.user;
 
-import com.haltebogen.gittalk.dto.member.FollowRequestDto;
 import com.haltebogen.gittalk.dto.member.FollowResponseDto;
 import com.haltebogen.gittalk.dto.member.MemberDetailResponseDto;
-import com.haltebogen.gittalk.dto.member.MemberResponseDto;
 import com.haltebogen.gittalk.entity.user.Follow;
 import com.haltebogen.gittalk.entity.user.FollowStatus;
 import com.haltebogen.gittalk.entity.user.Member;
@@ -44,7 +42,7 @@ public class FollowService {
     @Transactional
     public List<MemberDetailResponseDto> getFollowers(Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
-        List<Follow> follows = followRepository.findAllByFollower(member);
+        List<Follow> follows = followRepository.findAllByFollowerAndFollowStatus(member, FollowStatus.COMPLETED);
         return follows.stream().map(follow -> new MemberDetailResponseDto(follow.getFollowing())).collect(Collectors.toList());
     }
 }
