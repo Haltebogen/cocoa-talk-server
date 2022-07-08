@@ -1,4 +1,4 @@
-package com.haltebogen.gittalk.entity;
+package com.haltebogen.gittalk.entity.user;
 
 public enum ProviderType {
     BASIC, GITHUB

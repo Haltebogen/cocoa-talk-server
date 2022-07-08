@@ -1,10 +1,8 @@
 package com.haltebogen.gittalk.controller;
 
 import com.haltebogen.gittalk.dto.oauth.TokenDto;
-import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
-import com.haltebogen.gittalk.entity.Member;
-import com.haltebogen.gittalk.service.MemberService;
-import com.haltebogen.gittalk.service.OAuthService;
+import com.haltebogen.gittalk.service.user.MemberService;
+import com.haltebogen.gittalk.service.user.OAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;

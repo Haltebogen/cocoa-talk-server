@@ -3,11 +3,10 @@ package com.haltebogen.gittalk.controller;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
 import com.haltebogen.gittalk.dto.oauth.JwtTokenDto;
 import com.haltebogen.gittalk.dto.oauth.TokenDto;
-import com.haltebogen.gittalk.entity.Member;
+import com.haltebogen.gittalk.entity.user.Member;
 import com.haltebogen.gittalk.response.ResponseHandler;
-import com.haltebogen.gittalk.service.MemberService;
-import com.haltebogen.gittalk.service.OAuthService;
-import io.swagger.annotations.ApiOperation;
+import com.haltebogen.gittalk.service.user.MemberService;
+import com.haltebogen.gittalk.service.user.OAuthService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,5 +39,12 @@ public class AuthController {
         Member member = memberService.createMember(githubUserResponseDto);
         JwtTokenDto jwtTokenDto = oAuthService.createLoginMemberJwt(member);
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, jwtTokenDto);
+    }
+
+    @Deprecated
+    @PostMapping("/member")
+    public ResponseEntity<Object> createMember(@RequestBody GithubUserResponseDto githubUser) {
+        Member member = memberService.createMember(githubUser);
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, member);
     }
 }

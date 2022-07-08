@@ -1,6 +1,5 @@
 package com.haltebogen.gittalk.dto.member;
 
-import com.haltebogen.gittalk.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

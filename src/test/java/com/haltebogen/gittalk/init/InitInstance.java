@@ -2,8 +2,8 @@ package com.haltebogen.gittalk.init;
 
 import com.haltebogen.gittalk.dto.oauth.TokenDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
-import com.haltebogen.gittalk.entity.Member;
-import com.haltebogen.gittalk.entity.ProviderType;
+import com.haltebogen.gittalk.entity.user.Member;
+import com.haltebogen.gittalk.entity.user.ProviderType;
 
 public class InitInstance {
 
@@ -49,7 +49,7 @@ public class InitInstance {
                 .company(COMPANY)
                 .followers_url(FOLLOWERS_URL)
                 .followings_url(FOLLOWING_URL)
-                .followings(10L)
+                .following(10L)
                 .followers(20L)
                 .name(NAME).build();
         return githubUserResponseDto;

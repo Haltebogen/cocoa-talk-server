@@ -1,5 +1,6 @@
 package com.haltebogen.gittalk.entity;
 
+import com.haltebogen.gittalk.entity.user.Member;
 import com.haltebogen.gittalk.init.InitInstance;
 import com.haltebogen.gittalk.repository.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
