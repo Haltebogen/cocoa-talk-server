@@ -56,6 +56,12 @@ public class MemberAPIController {
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, memberResponseDto);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOtherProfile(@PathVariable Long id) {
+        MemberDetailResponseDto memberResponseDto = memberService.getMember(id);
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, memberResponseDto);
+    }
+
     @PostMapping("/follow")
     public ResponseEntity<Object> createFollow(
             Principal principal,
