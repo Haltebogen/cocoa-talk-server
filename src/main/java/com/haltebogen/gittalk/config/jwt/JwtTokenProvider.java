@@ -68,7 +68,7 @@ public class JwtTokenProvider {
     }
 
     private String getJwtSecretKey() {
-        return env.getProperty("jwt.secret-key");
+        return env.getProperty("jwt.secret");
     }
 
     private Date getExpirationDate(int tokenExpirationTime) {
