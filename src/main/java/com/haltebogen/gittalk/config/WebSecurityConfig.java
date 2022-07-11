@@ -38,11 +38,6 @@ public class WebSecurityConfig {
             "/auth/github/callback"
     };
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
-
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(
