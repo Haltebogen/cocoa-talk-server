@@ -1,6 +1,7 @@
 package com.haltebogen.gittalk.entity.notification;
 
 import com.haltebogen.gittalk.entity.BaseAuditEntity;
+import com.haltebogen.gittalk.entity.user.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Getter
 @Entity
@@ -20,4 +22,24 @@ public class Notification extends BaseAuditEntity {
     private String title;
     private String link;
     private String message;
+    private Boolean isRead;
+    private NotificationType notificationType;
+
+    @ManyToOne
+    private Member member;
+
+    @Builder
+    public Notification(
+            String title,
+            String link,
+            String message,
+            Boolean isRead,
+            NotificationType notificationType
+    ) {
+        this.title = title;
+        this.link = link;
+        this.message = message;
+        this.isRead = isRead;
+        this.notificationType = notificationType;
+    }
 }
