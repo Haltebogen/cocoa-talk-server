@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -23,6 +24,9 @@ public class Notification extends BaseAuditEntity {
     private Boolean isRead;
     private NotificationType notificationType;
 
+    @ManyToOne
+    @Nullable
+    private Member sender;
     @ManyToOne
     private Member member;
 
@@ -47,3 +51,7 @@ public class Notification extends BaseAuditEntity {
         this.isRead = true;
     }
 }
+
+
+// 친구 요청, github 가입 유저중에서 서비스를 가입했을 때 알림, 단톡방 초대
+// 수락을 버튼
