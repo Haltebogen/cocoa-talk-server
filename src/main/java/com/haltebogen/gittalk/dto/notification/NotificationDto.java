@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class NotificationResponseDto {
+public class NotificationDto {
 
     private String title;
     private String link;
@@ -20,7 +20,7 @@ public class NotificationResponseDto {
     private LocalDateTime createdAt;
 
     @Builder
-    public NotificationResponseDto(Notification notification) {
+    public NotificationDto(Notification notification) {
         this.title = notification.getTitle();
         this.link = notification.getLink();
         this.message = notification.getMessage();
