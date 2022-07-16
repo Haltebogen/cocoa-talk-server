@@ -1,5 +1,6 @@
 package com.haltebogen.gittalk.entity.notification;
 
+import com.haltebogen.gittalk.dto.notification.NotificationDto;
 import com.haltebogen.gittalk.entity.BaseAuditEntity;
 import com.haltebogen.gittalk.entity.user.Member;
 import lombok.AccessLevel;
@@ -32,23 +33,23 @@ public class Notification extends BaseAuditEntity {
 
     @Builder
     public Notification(
-            String title,
-            String link,
-            String message,
-            Boolean isRead,
-            NotificationType notificationType,
+            NotificationDto notificationDto,
             Member receiver
     ) {
-        this.title = title;
-        this.link = link;
-        this.message = message;
-        this.isRead = isRead;
-        this.notificationType = notificationType;
+        this.title = notificationDto.getTitle();
+        this.link = notificationDto.getLink();
+        this.message = notificationDto.getMessage();
+        this.isRead = notificationDto.getIsRead();
+        this.notificationType = notificationDto.getNotificationType();
         this.receiver = receiver;
     }
 
     public void updateIsRead() {
         this.isRead = true;
+    }
+
+    public void updateSender(Member sender) {
+        this.sender = sender;
     }
 }
 
