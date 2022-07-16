@@ -1,2 +1,6 @@
-package com.haltebogen.gittalk.entity.chat;public enum MediaType {
+package com.haltebogen.gittalk.entity.chat;
+
+public enum MediaType {
+    IMAGE,
+    VIDEO
 }
