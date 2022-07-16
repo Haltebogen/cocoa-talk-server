@@ -1,2 +1,7 @@
-package com.haltebogen.gittalk.entity.chat;public enum MessageStatus {
+package com.haltebogen.gittalk.entity.chat;
+
+public enum MessageStatus {
+    TEXT,
+    IMAGE,
+    STATUS
 }
