@@ -35,7 +35,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
     @Bean
     public MongoTemplate mongoTemplate() {
-        return new MongoTemplate(mongoClient(), "tdatabase");
+        return new MongoTemplate(mongoClient(), "database");
     }
 
     @Override
