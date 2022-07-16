@@ -1,6 +1,7 @@
 package com.haltebogen.gittalk.service.notification;
 
 
+import com.haltebogen.gittalk.dto.notification.NotificationDto;
 import com.haltebogen.gittalk.entity.notification.Notification;
 import com.haltebogen.gittalk.entity.user.Member;
 import com.haltebogen.gittalk.repository.MemberRepository;
@@ -23,5 +24,16 @@ public class NotificationService {
     public Page<Notification> getNotifications(Pageable pageable, Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
         return notificationRepository.findAllByReceiverOrderByCreatedAtDesc(member, pageable);
+    }
+
+    @Transactional
+    public NotificationDto createNotification(Long memberId, NotificationDto notificationDto) {
+        Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
+        Notification notification = Notification.builder()
+                .notificationDto(notificationDto)
+                .receiver(member)
+                .build();
+        notificationRepository.save(notification);
+        return notificationDto;
     }
 }
