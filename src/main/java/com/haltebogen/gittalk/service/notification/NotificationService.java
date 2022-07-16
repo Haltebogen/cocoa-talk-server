@@ -22,6 +22,6 @@ public class NotificationService {
     @Transactional
     public Page<Notification> getNotifications(Pageable pageable, Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
-        return notificationRepository.findAllByMemberOrderByCreatedAtDesc(member, pageable);
+        return notificationRepository.findAllByReceiverOrderByCreatedAtDesc(member, pageable);
     }
 }

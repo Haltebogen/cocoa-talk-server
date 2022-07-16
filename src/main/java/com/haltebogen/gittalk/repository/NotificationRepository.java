@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
-    Page<Notification> findAllByMemberOrderByCreatedAtDesc(Member member, Pageable pageable);
+    Page<Notification> findAllByReceiverOrderByCreatedAtDesc(Member member, Pageable pageable);
 
 }

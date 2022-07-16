@@ -28,7 +28,7 @@ public class Notification extends BaseAuditEntity {
     @Nullable
     private Member sender;
     @ManyToOne
-    private Member member;
+    private Member receiver;
 
     @Builder
     public Notification(
@@ -37,14 +37,14 @@ public class Notification extends BaseAuditEntity {
             String message,
             Boolean isRead,
             NotificationType notificationType,
-            Member member
+            Member receiver
     ) {
         this.title = title;
         this.link = link;
         this.message = message;
         this.isRead = isRead;
         this.notificationType = notificationType;
-        this.member = member;
+        this.receiver = receiver;
     }
 
     public void updateIsRead() {
