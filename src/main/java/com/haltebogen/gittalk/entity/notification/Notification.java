@@ -52,7 +52,3 @@ public class Notification extends BaseAuditEntity {
         this.sender = sender;
     }
 }
-
-
-// 친구 요청, github 가입 유저중에서 서비스를 가입했을 때 알림, 단톡방 초대
-// 수락을 버튼
