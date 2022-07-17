@@ -25,6 +25,9 @@ public class Notification extends BaseAuditEntity {
     private Boolean isRead;
     private NotificationType notificationType;
 
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isSendPushNotification;
+
     @ManyToOne
     @Nullable
     private Member sender;
@@ -50,5 +53,9 @@ public class Notification extends BaseAuditEntity {
 
     public void updateSender(Member sender) {
         this.sender = sender;
+    }
+
+    public void updateIsSendPushNotification(Boolean isSendPushNotification) {
+        this.isSendPushNotification = isSendPushNotification;
     }
 }
