@@ -63,7 +63,7 @@ public class MemberAPIController {
     }
 
     @PostMapping("/follow")
-    public ResponseEntity<Object> createFollow(
+    public ResponseEntity<Object> createFollowRequest(
             Principal principal,
             @RequestBody FollowRequestDto followRequestDto
     ) {
@@ -74,6 +74,19 @@ public class MemberAPIController {
         );
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, followResponseDto);
     }
+    @PostMapping("/follow/allow")
+    public ResponseEntity<Object> createFollowAllow(
+            Principal principal,
+            @RequestBody FollowRequestDto followRequestDto
+    ) {
+        String memberId = principal.getName();
+        FollowResponseDto followResponseDto = followService.createFollowAllow(
+                Long.valueOf(memberId),
+                followRequestDto.getFollowing()
+        );
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, followResponseDto);
+    }
+
     @GetMapping("/follows")
     public ResponseEntity<Object> getFollows(Principal principal) {
         String memberId = principal.getName();
