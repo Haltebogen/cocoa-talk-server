@@ -1,6 +1,6 @@
 package com.haltebogen.gittalk.repository;
 
-import com.haltebogen.gittalk.entity.Member;
+import com.haltebogen.gittalk.entity.user.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

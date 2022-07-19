@@ -31,13 +31,12 @@ public class WebSecurityConfig {
             "/swagger-ui.html",
             "/webjars/**",
             "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
+            "/auth/member",
+            "/auth/login",
+            "/github",
+            "/auth/github/callback"
     };
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
 
 
     @Bean
@@ -57,9 +56,6 @@ public class WebSecurityConfig {
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .authorizeRequests()
-                .antMatchers("/auth/login").permitAll()
-                .antMatchers("/github").permitAll()  // 삭제 예정
-                .antMatchers("/auth/github/callback").permitAll() // 삭제 예정
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/api/v1/**").authenticated()
                 .anyRequest().authenticated().and()

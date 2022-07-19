@@ -1,5 +1,6 @@
-package com.haltebogen.gittalk.entity;
+package com.haltebogen.gittalk.entity.user;
 
+import com.haltebogen.gittalk.entity.BaseAuditEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Member extends BaseAuditEntity{
+public class Member extends BaseAuditEntity {
 
     @Id @GeneratedValue
     @Column(name="member_id")

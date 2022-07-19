@@ -1,12 +1,12 @@
-package com.haltebogen.gittalk.service;
+package com.haltebogen.gittalk.service.user;
 
 import com.haltebogen.gittalk.dto.member.ChatMemberResponseDto;
 import com.haltebogen.gittalk.dto.member.GitUserProfileDto;
 import com.haltebogen.gittalk.dto.member.MemberDetailResponseDto;
 import com.haltebogen.gittalk.dto.member.MemberResponseDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
-import com.haltebogen.gittalk.entity.Member;
-import com.haltebogen.gittalk.entity.ProviderType;
+import com.haltebogen.gittalk.entity.user.Member;
+import com.haltebogen.gittalk.entity.user.ProviderType;
 import com.haltebogen.gittalk.repository.MemberRepository;
 import com.haltebogen.gittalk.trace.Trace;
 import lombok.RequiredArgsConstructor;

@@ -1,13 +1,14 @@
 package com.haltebogen.gittalk.service;
 
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
-import com.haltebogen.gittalk.entity.Member;
-import com.haltebogen.gittalk.entity.ProviderType;
+import com.haltebogen.gittalk.entity.user.Member;
+import com.haltebogen.gittalk.entity.user.ProviderType;
 import com.haltebogen.gittalk.init.InitInstance;
 import com.haltebogen.gittalk.repository.MemberRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.haltebogen.gittalk.service.user.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,7 @@ public class MemberServiceTest {
             assertThat(githubUserResponseDto.getLogin()).isEqualTo(member.getNickName());
             assertThat(githubUserResponseDto.getCompany()).isEqualTo(member.getCompany());
             assertThat(githubUserResponseDto.getFollowers()).isEqualTo(member.getFollowersNum());
-            assertThat(githubUserResponseDto.getFollowings()).isEqualTo(member.getFollowingsNum());
+            assertThat(githubUserResponseDto.getFollowing()).isEqualTo(member.getFollowingsNum());
             assertThat(githubUserResponseDto.getFollowers_url()).isEqualTo(member.getFollowersUrl());
             assertThat(githubUserResponseDto.getFollowings_url()).isEqualTo(member.getFollowingUrl());
             assertThat(ProviderType.GITHUB).isEqualTo(member.getProviderType());

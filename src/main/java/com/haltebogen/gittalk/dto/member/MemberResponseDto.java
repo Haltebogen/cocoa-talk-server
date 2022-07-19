@@ -1,6 +1,6 @@
 package com.haltebogen.gittalk.dto.member;
 
-import com.haltebogen.gittalk.entity.Member;
+import com.haltebogen.gittalk.entity.user.Member;
 import lombok.Getter;
 
 @Getter
