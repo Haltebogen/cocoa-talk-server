@@ -30,7 +30,7 @@ public class FollowService {
     private final NotificationService notificationService;
 
     @Transactional
-    public FollowResponseDto createFollow(Long memberId, Long followTargetMemberId) {
+    public FollowResponseDto createFollowRequest(Long memberId, Long followTargetMemberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
         Member targetMember = memberRepository.findById(followTargetMemberId).orElseThrow(IllegalArgumentException::new);
 

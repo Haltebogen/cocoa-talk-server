@@ -68,7 +68,7 @@ public class MemberAPIController {
             @RequestBody FollowRequestDto followRequestDto
     ) {
         String memberId = principal.getName();
-        FollowResponseDto followResponseDto = followService.createFollow(
+        FollowResponseDto followResponseDto = followService.createFollowRequest(
                 Long.valueOf(memberId),
                 followRequestDto.getFollowing()
         );
