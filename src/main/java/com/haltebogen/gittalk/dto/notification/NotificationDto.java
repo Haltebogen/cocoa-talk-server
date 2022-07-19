@@ -19,11 +19,11 @@ public class NotificationDto {
     private NotificationType notificationType;
 
     @Builder
-    public NotificationDto(Notification notification) {
-        this.title = notification.getTitle();
-        this.link = notification.getLink();
-        this.message = notification.getMessage();
-        this.isRead = notification.getIsRead();
-        this.notificationType = notification.getNotificationType();
+    public NotificationDto(String title, String link, String message, Boolean isRead, NotificationType notificationType) {
+        this.title = title;
+        this.link = link;
+        this.message = message;
+        this.isRead = isRead;
+        this.notificationType = notificationType;
     }
 }
