@@ -27,8 +27,7 @@ public class NotificationService {
     }
 
     @Transactional
-    public NotificationDto createNotification(Long memberId, NotificationDto notificationDto) {
-        Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
+    public NotificationDto createNotification(Member member, NotificationDto notificationDto) {
         Notification notification = Notification.builder()
                 .notificationDto(notificationDto)
                 .receiver(member)
