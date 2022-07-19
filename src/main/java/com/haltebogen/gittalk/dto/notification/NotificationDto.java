@@ -17,7 +17,6 @@ public class NotificationDto {
     private String message;
     private Boolean isRead;
     private NotificationType notificationType;
-    private LocalDateTime createdAt;
 
     @Builder
     public NotificationDto(Notification notification) {
@@ -26,6 +25,5 @@ public class NotificationDto {
         this.message = notification.getMessage();
         this.isRead = notification.getIsRead();
         this.notificationType = notification.getNotificationType();
-        this.createdAt = notification.getCreatedAt();
     }
 }
