@@ -101,7 +101,6 @@ public class MemberAPIController {
             Principal principal
     ) {
         String memberId = principal.getName();
-        List<ChatMemberResponseDto> githubUsers = memberService.getChatMembers(Long.valueOf(memberId));
-        return ResponseHandler.generateResponse("ok", HttpStatus.OK, githubUsers);
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, "");
     }
 }
