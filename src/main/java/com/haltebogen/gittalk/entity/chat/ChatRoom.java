@@ -34,5 +34,5 @@ public class ChatRoom {
     @LastModifiedDate
     LocalDateTime editedAt;
 
-    }
+
 }

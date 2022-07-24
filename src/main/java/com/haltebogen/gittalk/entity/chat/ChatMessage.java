@@ -1,8 +1,11 @@
 package com.haltebogen.gittalk.entity.chat;
 
+import com.haltebogen.gittalk.dto.member.ChatMemberResponseDto;
 import com.mongodb.lang.Nullable;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,11 +15,14 @@ import java.util.List;
 
 @Document(collection = "messages")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ChatMessage {
 
     @Id
     private String _id;
     private List<String> participantId;
+    private String sender;
     private String chatRoomId;
 
     private String message;
@@ -28,16 +34,4 @@ public class ChatMessage {
     @Nullable
     private MessageAlertType messageAlertType;
 
-    @Builder
-    public ChatMessage(List<String> participantId, String chatRoomId,
-                       String message, MessageStatus messageStatus,
-                       LocalDateTime createdAt,
-                       @Nullable MessageAlertType messageAlertType) {
-        this.participantId = participantId;
-        this.chatRoomId = chatRoomId;
-        this.message = message;
-        this.messageStatus = messageStatus;
-        this.createdAt = createdAt;
-        this.messageAlertType = messageAlertType;
-    }
 }
