@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface FollowRepository extends JpaRepository<Follow, Long> {
     List<Follow> findAllByFollowerAndFollowStatus(Member follower, FollowStatus followStatus);
+    Follow findByFollowingAndFollowStatus(Member following, FollowStatus followStatus);
 }
