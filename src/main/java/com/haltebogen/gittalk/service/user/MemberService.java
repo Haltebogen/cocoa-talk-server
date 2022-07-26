@@ -67,12 +67,27 @@ public class MemberService {
         return new MemberDetailResponseDto(member);
     }
 
+    @Trace
+    public Page<Member> findGithubFollowBySearch(Pageable pageable, String keyword) {
+
+    }
+
+    private List<GitUserProfileDto> getGitUserFollowers(String nickName) {
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<GitUserProfileDto[]> responseGithubData = restTemplate.exchange(
+                String.format(GITHUB_FOLLOWERS_API_URL_PATH, nickName, PAGINATION_PAGE_SIZE),
+                HttpMethod.GET,
+                httpEntity,
+                GitUserProfileDto[].class
+        );
+
+        return Arrays.asList(responseGithubData.getBody());
+    }
+
 
     private boolean isExistMember(Long providerId){
         return memberRepository.existsByProviderId(providerId);
-    }
-
-    @Trace
-    public Page<Member> findGithubFollowBySearch(Pageable pageable, String keyword) {
     }
 }

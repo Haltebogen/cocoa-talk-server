@@ -103,7 +103,7 @@ public class MemberAPIController {
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, new PaginationResponseDto(
                 pageData.getTotalPages(),
                 pageData.hasNext(),
-                pageData.stream().map(MemberResponseDto::new).collect(Collectors.toList());
+                pageData.stream().map(MemberResponseDto::new).collect(Collectors.toList())));
     }
 
     @Deprecated
