@@ -71,7 +71,16 @@ public class MemberService {
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         List<GitUserProfileDto> followers = getGitUserFollowers(member.getNickName());
         List<GitUserProfileDto> followings = getGitUserFollowings(member.getNickName());
-        return generateGithubFollows(followers, followings);
+        List<SearchGithubFollowResponseDto> githubFollowsData = generateGithubFollows(followers, followings);
+        List<SearchGithubFollowResponseDto> results = new ArrayList<>();
+        for (SearchGithubFollowResponseDto searchGithubFollowResponseDto: githubFollowsData
+             ) {
+            if (searchGithubFollowResponseDto.getNickName().contains(keyword) ||
+            searchGithubFollowResponseDto.getEmail().contains(keyword)) {
+                results.add(searchGithubFollowResponseDto);
+            }
+        }
+        return results;
     }
 
     private List<SearchGithubFollowResponseDto> generateGithubFollows(
