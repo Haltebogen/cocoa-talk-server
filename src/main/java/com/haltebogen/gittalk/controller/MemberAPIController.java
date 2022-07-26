@@ -96,14 +96,13 @@ public class MemberAPIController {
 
     @GetMapping("/follow/search")
     public ResponseEntity<Object> searchFollow(
+            Principal principal,
             @PageableDefault Pageable pageable,
             @RequestParam String keyword
     ) {
-        Page<Member> pageData = memberService.findGithubFollowBySearch(pageable, keyword);
-        return ResponseHandler.generateResponse("ok", HttpStatus.OK, new PaginationResponseDto(
-                pageData.getTotalPages(),
-                pageData.hasNext(),
-                pageData.stream().map(MemberResponseDto::new).collect(Collectors.toList())));
+        String memberId = principal.getName();
+        List<SearchGithubFollowResponseDto> follows = memberService.findGithubFollowBySearch(Long.valueOf(memberId), pageable, keyword);
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, follows);
     }
 
     @Deprecated
