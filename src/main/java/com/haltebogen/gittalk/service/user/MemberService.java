@@ -1,9 +1,9 @@
 package com.haltebogen.gittalk.service.user;
 
-import com.haltebogen.gittalk.dto.member.ChatMemberResponseDto;
 import com.haltebogen.gittalk.dto.member.GitUserProfileDto;
 import com.haltebogen.gittalk.dto.member.MemberDetailResponseDto;
 import com.haltebogen.gittalk.dto.member.MemberResponseDto;
+import com.haltebogen.gittalk.dto.member.SearchGithubFollowResponseDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
 import com.haltebogen.gittalk.entity.user.Member;
 import com.haltebogen.gittalk.entity.user.ProviderType;
@@ -71,6 +71,7 @@ public class MemberService {
     public Page<Member> findGithubFollowBySearch(Pageable pageable, String keyword) {
 
     }
+
 
     private List<GitUserProfileDto> getGitUserFollowers(String nickName) {
         HttpHeaders headers = new HttpHeaders();
