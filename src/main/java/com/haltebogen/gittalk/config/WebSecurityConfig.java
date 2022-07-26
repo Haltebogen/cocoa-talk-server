@@ -32,7 +32,7 @@ public class WebSecurityConfig {
             "/auth/member",
             "/auth/login",
             "/github",
-            "/auth/github/callback"
+            "/api/auth/github/callback"
     };
 
 
