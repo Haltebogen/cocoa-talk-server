@@ -86,6 +86,19 @@ public class MemberService {
         return Arrays.asList(responseGithubData.getBody());
     }
 
+    private List<GitUserProfileDto> getGitUserFollowings(String nickName) {
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<GitUserProfileDto[]> responseGithubData = restTemplate.exchange(
+                String.format(GITHUB_FOLLOWINGS_API_URL_PATH, nickName, PAGINATION_PAGE_SIZE),
+                HttpMethod.GET,
+                httpEntity,
+                GitUserProfileDto[].class
+        );
+
+        return Arrays.asList(responseGithubData.getBody());
+    }
 
     private boolean isExistMember(Long providerId){
         return memberRepository.existsByProviderId(providerId);
