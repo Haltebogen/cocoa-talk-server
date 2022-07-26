@@ -71,4 +71,8 @@ public class MemberService {
     private boolean isExistMember(Long providerId){
         return memberRepository.existsByProviderId(providerId);
     }
+
+    @Trace
+    public Page<Member> findGithubFollowBySearch(Pageable pageable, String keyword) {
+    }
 }
