@@ -1,9 +1,8 @@
 package com.haltebogen.gittalk.service.user;
 
-import com.haltebogen.gittalk.dto.member.ChatMemberResponseDto;
 import com.haltebogen.gittalk.dto.member.GitUserProfileDto;
 import com.haltebogen.gittalk.dto.member.MemberDetailResponseDto;
-import com.haltebogen.gittalk.dto.member.MemberResponseDto;
+import com.haltebogen.gittalk.dto.member.SearchGithubFollowResponseDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
 import com.haltebogen.gittalk.entity.user.Member;
 import com.haltebogen.gittalk.entity.user.ProviderType;
@@ -67,8 +66,96 @@ public class MemberService {
         return new MemberDetailResponseDto(member);
     }
 
+    @Trace
+    public List<SearchGithubFollowResponseDto> findGithubFollowBySearch(Long id, Pageable pageable, String keyword) {
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        List<GitUserProfileDto> followers = getGitUserFollowers(member.getNickName());
+        List<GitUserProfileDto> followings = getGitUserFollowings(member.getNickName());
+        List<SearchGithubFollowResponseDto> githubFollowsData = generateGithubFollows(followers, followings);
+        List<SearchGithubFollowResponseDto> results = new ArrayList<>();
+        for (SearchGithubFollowResponseDto searchGithubFollowResponseDto: githubFollowsData
+             ) {
+            if (searchGithubFollowResponseDto.getNickName().contains(keyword) ||
+            searchGithubFollowResponseDto.getEmail().contains(keyword)) {
+                results.add(searchGithubFollowResponseDto);
+            }
+        }
+        return results;
+    }
 
-    private boolean isExistMember(Long providerId){
+    private List<SearchGithubFollowResponseDto> generateGithubFollows(
+            List<GitUserProfileDto> followers,
+            List<GitUserProfileDto> followings
+    ) {
+        List<SearchGithubFollowResponseDto> githubFollows = new ArrayList<>();
+
+        for (GitUserProfileDto follower : followers
+        ) {
+            SearchGithubFollowResponseDto searchGithubFollowResponseDto = SearchGithubFollowResponseDto.builder()
+                    .member(follower)
+                    .isFollower(true)
+                    .isFollowing(false)
+                    .isMember(false).build();
+            if (isExistMember(follower.getId())) {
+                searchGithubFollowResponseDto.updateIsMember(true);
+            }
+            githubFollows.add(searchGithubFollowResponseDto);
+        }
+
+        for (GitUserProfileDto following : followings
+        ) {
+            Boolean isFollowing = false;
+            for (SearchGithubFollowResponseDto searchGithubFollowResponseDto : githubFollows) {
+                if (searchGithubFollowResponseDto.getProviderId().equals(following.getId())) {
+                    searchGithubFollowResponseDto.updateIsFollowing(true);
+                    isFollowing = true;
+                }
+            }
+
+            if (!isFollowing) {
+                SearchGithubFollowResponseDto searchGithubFollowResponseDto = SearchGithubFollowResponseDto.builder()
+                        .member(following)
+                        .isFollower(false)
+                        .isFollowing(true)
+                        .isMember(false).build();
+                if (isExistMember(following.getId())) {
+                    searchGithubFollowResponseDto.updateIsMember(true);
+                }
+                githubFollows.add(searchGithubFollowResponseDto);
+            }
+        }
+        return githubFollows;
+    }
+
+    private List<GitUserProfileDto> getGitUserFollowers(String nickName) {
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<GitUserProfileDto[]> responseGithubData = restTemplate.exchange(
+                String.format(GITHUB_FOLLOWERS_API_URL_PATH, nickName, PAGINATION_PAGE_SIZE),
+                HttpMethod.GET,
+                httpEntity,
+                GitUserProfileDto[].class
+        );
+
+        return Arrays.asList(responseGithubData.getBody());
+    }
+
+    private List<GitUserProfileDto> getGitUserFollowings(String nickName) {
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<GitUserProfileDto[]> responseGithubData = restTemplate.exchange(
+                String.format(GITHUB_FOLLOWINGS_API_URL_PATH, nickName, PAGINATION_PAGE_SIZE),
+                HttpMethod.GET,
+                httpEntity,
+                GitUserProfileDto[].class
+        );
+
+        return Arrays.asList(responseGithubData.getBody());
+    }
+
+    private boolean isExistMember(Long providerId) {
         return memberRepository.existsByProviderId(providerId);
     }
 }

@@ -94,6 +94,17 @@ public class MemberAPIController {
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, followers);
     }
 
+    @GetMapping("/follow/search")
+    public ResponseEntity<Object> searchFollow(
+            Principal principal,
+            @PageableDefault Pageable pageable,
+            @RequestParam String keyword
+    ) {
+        String memberId = principal.getName();
+        List<SearchGithubFollowResponseDto> follows = memberService.findGithubFollowBySearch(Long.valueOf(memberId), pageable, keyword);
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, follows);
+    }
+
     @Deprecated
     @GetMapping("/profiles")
     public ResponseEntity<Object> getChatMembers(
