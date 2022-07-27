@@ -95,6 +95,12 @@ public class MemberAPIController {
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, followers);
     }
 
+    @Operation(summary="팔로우 요청 멤버 검색", description = "키워드를 이용해서, 팔로우 요청을 보낼 멤버를 검색할 수 있다.")
+    @ApiResponses({
+            @ApiResponse(code=200, message = "OK"),
+            @ApiResponse(code=400, message = "keyword parameter 가 존재하지 않습니다."),
+            @ApiResponse(code=500, message = "Server Error")
+    })
     @GetMapping("/follow/search")
     public ResponseEntity<Object> searchFollow(
             Principal principal,
