@@ -21,7 +21,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -75,8 +74,7 @@ public class MemberService {
         List<SearchGithubFollowResponseDto> results = new ArrayList<>();
         for (SearchGithubFollowResponseDto searchGithubFollowResponseDto: githubFollowsData
              ) {
-            if (searchGithubFollowResponseDto.getNickName().contains(keyword) ||
-            searchGithubFollowResponseDto.getEmail().contains(keyword)) {
+            if (String.format(searchGithubFollowResponseDto.getNickName()).contains(keyword)) {
                 results.add(searchGithubFollowResponseDto);
             }
         }

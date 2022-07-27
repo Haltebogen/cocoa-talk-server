@@ -11,7 +11,6 @@ public class ChatRoomMedia {
 
     @Id
     private String _id;
-
     private String chatRoomId;
     private MediaType mediaType;
     private String uri;

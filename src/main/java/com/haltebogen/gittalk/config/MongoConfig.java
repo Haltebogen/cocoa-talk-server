@@ -23,10 +23,13 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
         return mongo;
     }
 
-    @Bean
-    public MongoDatabaseFactory mongoDatabaseFactory() {
-        return new SimpleMongoClientDatabaseFactory(MongoClients.create(), "database");
-    }
+    /**
+     * Bean error -> register multiple bean problem
+     */
+//    @Bean
+//    public MongoDatabaseFactory mongoDatabaseFactory() {
+//        return new SimpleMongoClientDatabaseFactory(MongoClients.create(), "database");
+//    }
 
     @Bean
     public MongoClient mongoClient() {

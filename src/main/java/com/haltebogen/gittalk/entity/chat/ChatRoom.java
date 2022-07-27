@@ -1,8 +1,7 @@
 package com.haltebogen.gittalk.entity.chat;
 
-import com.haltebogen.gittalk.dto.member.ChatMemberResponseDto;
+import com.haltebogen.gittalk.dto.member.MemberDetailResponseDto;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -26,13 +25,11 @@ public class ChatRoom {
 
     private List<ChatMessage> messages;
 
-    private List<ChatMemberResponseDto> users;
+    private List<MemberDetailResponseDto> users;
 
     @CreatedDate
     LocalDateTime createdAt;
 
     @LastModifiedDate
     LocalDateTime editedAt;
-
-
 }

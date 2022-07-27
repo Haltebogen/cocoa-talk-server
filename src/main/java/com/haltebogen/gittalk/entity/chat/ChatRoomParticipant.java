@@ -6,7 +6,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,16 +15,11 @@ public class ChatRoomParticipant {
 
     @Id
     private String _id;
-
     private List<String> memberId;
     private String chatRoomId;
-
     private String name;
-
-
     @CreatedDate
     private LocalDateTime createdAt;
-
     private LocalDateTime lastReadAt;
 
     @Builder
