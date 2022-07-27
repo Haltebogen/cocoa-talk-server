@@ -16,10 +16,8 @@ public class ChatRoomParticipant {
 
     @Id
     private String _id;
-
     private List<String> memberId;
     private String chatRoomId;
-
     private String name;
 
 
