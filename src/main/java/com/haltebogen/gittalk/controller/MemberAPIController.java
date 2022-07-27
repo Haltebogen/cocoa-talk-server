@@ -31,6 +31,7 @@ public class MemberAPIController {
     private final MemberService memberService;
     private final FollowService followService;
 
+    @Deprecated
     @Operation(summary="멤버 검색", description = "키워드를 이용해서, 멤버를 검색할 수 있다.")
     @ApiResponses({
             @ApiResponse(code=200, message = "OK"),
