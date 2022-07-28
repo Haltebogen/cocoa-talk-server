@@ -66,7 +66,7 @@ public class MemberService {
     }
 
     @Trace
-    public List<SearchGithubFollowResponseDto> findGithubFollowBySearch(Long id, Pageable pageable, String keyword) {
+    public List<SearchGithubFollowResponseDto> findGithubFollowBySearch(Long id, String keyword) {
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         List<GitUserProfileDto> followers = getGitUserFollowers(member.getNickName());
         List<GitUserProfileDto> followings = getGitUserFollowings(member.getNickName());
