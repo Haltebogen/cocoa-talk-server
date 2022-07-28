@@ -119,7 +119,8 @@ public class MemberAPIController {
                     ),
                     @ApiResponse(
                             responseCode = "400",
-                            description = "팔로우 요청 멤버 리스트 조회 시 keyword query parameter가 없을 때 400 bad request 에러",
+                            description = "팔로우 요청 멤버 리스트 조회 시 keyword query parameter가 없을 때 400 bad request 에러 \n " +
+                                    "keyword 가 blank 일때는 해당사항에서 제외",
                             content = @Content(
                                     mediaType = "application/json"
                             )
