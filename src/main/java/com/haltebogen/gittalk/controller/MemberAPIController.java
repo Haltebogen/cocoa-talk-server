@@ -126,6 +126,12 @@ public class MemberAPIController {
                     )
             }
     )
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "keyword",
+                    value = "팔로우 요청을 보낼 Github Nickname"
+            ),
+    })
     @GetMapping("/follow/search")
     public ResponseEntity<Object> searchFollow(
             Principal principal,
