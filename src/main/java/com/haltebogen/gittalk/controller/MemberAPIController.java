@@ -6,10 +6,16 @@ import com.haltebogen.gittalk.entity.user.Member;
 import com.haltebogen.gittalk.response.ResponseHandler;
 import com.haltebogen.gittalk.service.user.FollowService;
 import com.haltebogen.gittalk.service.user.MemberService;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.ResponseHeader;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,6 +29,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(name = "members", description = "멤버 및 팔로우 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -32,11 +39,11 @@ public class MemberAPIController {
     private final FollowService followService;
 
     @Deprecated
-    @Operation(summary="멤버 검색", description = "키워드를 이용해서, 멤버를 검색할 수 있다.")
-    @ApiResponses({
-            @ApiResponse(code=200, message = "OK"),
-            @ApiResponse(code=500, message = "Server Error")
-    })
+    @Operation(summary = "멤버 검색", description = "키워드를 이용해서, 멤버를 검색할 수 있다.")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "OK"),
+//            @ApiResponse(code = 500, message = "Server Error")
+//    })
     @GetMapping("/search")
     public ResponseEntity<Object> searchMember(
             @PageableDefault Pageable pageable,
@@ -75,6 +82,7 @@ public class MemberAPIController {
         );
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, followResponseDto);
     }
+
     @PostMapping("/follow/allow")
     public ResponseEntity<Object> createFollowAllow(
             Principal principal,
@@ -88,6 +96,7 @@ public class MemberAPIController {
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, followResponseDto);
     }
 
+
     @GetMapping("/follows")
     public ResponseEntity<Object> getFollows(Principal principal) {
         String memberId = principal.getName();
@@ -95,12 +104,28 @@ public class MemberAPIController {
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, followers);
     }
 
-    @Operation(summary="팔로우 요청 멤버 검색", description = "키워드를 이용해서, 팔로우 요청을 보낼 멤버를 검색할 수 있다.")
-    @ApiResponses({
-            @ApiResponse(code=200, message = "OK"),
-            @ApiResponse(code=400, message = "keyword parameter 가 존재하지 않습니다."),
-            @ApiResponse(code=500, message = "Server Error")
-    })
+    @Operation(
+            summary = "팔로우 요청 멤버 검색",
+            description = "키워드를 이용해서, 팔로우 요청을 보낼 멤버를 검색할 수 있다."
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "팔로우 요청 멤버 검색 리스트 조회 성공",
+                            content = @Content(
+                                    mediaType = "application/json"
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "팔로우 요청 멤버 리스트 조회 시 keyword query parameter가 없을 때 400 bad request 에러",
+                            content = @Content(
+                                    mediaType = "application/json"
+                            )
+                    )
+            }
+    )
     @GetMapping("/follow/search")
     public ResponseEntity<Object> searchFollow(
             Principal principal,
