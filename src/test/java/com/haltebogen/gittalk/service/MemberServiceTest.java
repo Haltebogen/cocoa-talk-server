@@ -83,6 +83,9 @@ public class MemberServiceTest {
 
             assertThat(results.size()).isEqualTo(1);
             assertThat(results.get(0).getNickName()).isEqualTo(keyword);
+            assertThat(results.get(0).getIsFollower()).isEqualTo(true);
+            assertThat(results.get(0).getIsFollowing()).isEqualTo(true);
+            assertThat(results.get(0).getIsMember()).isEqualTo(false);
         }
     }
 }
