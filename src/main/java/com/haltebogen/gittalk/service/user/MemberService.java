@@ -74,7 +74,7 @@ public class MemberService {
         List<SearchGithubFollowResponseDto> results = new ArrayList<>();
         for (SearchGithubFollowResponseDto searchGithubFollowResponseDto: githubFollowsData
              ) {
-            if (String.format(searchGithubFollowResponseDto.getNickName()).contains(keyword)) {
+            if (searchGithubFollowResponseDto.getNickName().contains(keyword)) {
                 results.add(searchGithubFollowResponseDto);
             }
         }

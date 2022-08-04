@@ -87,5 +87,22 @@ public class MemberServiceTest {
             assertThat(results.get(0).getIsFollowing()).isEqualTo(true);
             assertThat(results.get(0).getIsMember()).isEqualTo(false);
         }
+
+        @Test
+        @Transactional
+        @DisplayName("Github followings과 followers에 keyword와 같은 닉네임의 github user가 없을 경우 빈 리스트가 조회된다.")
+        public void test_find_github_follow_by_search_keyword_포함된_멤버_성공() {
+            GithubUserResponseDto githubUserResponseDto = initMember.createGithubUserResponseDto(1234L, "oereo");
+            Member member = memberService.createMember(githubUserResponseDto);
+            String keyword = "unan";
+
+            List<SearchGithubFollowResponseDto> results =  memberService.findGithubFollowBySearch(member.getId(), keyword);
+
+            assertThat(results.size()).isEqualTo(1);
+            assertThat(results.get(0).getNickName().contains(keyword)).isEqualTo(true);
+            assertThat(results.get(0).getIsFollower()).isEqualTo(true);
+            assertThat(results.get(0).getIsFollowing()).isEqualTo(true);
+            assertThat(results.get(0).getIsMember()).isEqualTo(false);
+        }
     }
 }
