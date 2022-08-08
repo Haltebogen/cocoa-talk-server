@@ -19,13 +19,8 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     public MongoClientFactoryBean mongo() {
         MongoClientFactoryBean mongo = new MongoClientFactoryBean();
         mongo.setHost("localhost");
-        mongo.setPort(27018);
+        mongo.setPort(27017);
         return mongo;
-    }
-
-    @Bean
-    public MongoDatabaseFactory mongoDatabaseFactory() {
-        return new SimpleMongoClientDatabaseFactory(MongoClients.create(), "database");
     }
 
     @Bean
@@ -35,11 +30,11 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
     @Bean
     public MongoTemplate mongoTemplate() {
-        return new MongoTemplate(mongoClient(), "database");
+        return new MongoTemplate(mongoClient(), "git-talk-server");
     }
 
     @Override
     protected String getDatabaseName() {
-        return "database";
+        return "git-talk-server";
     }
 }
