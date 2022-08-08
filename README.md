@@ -1,2 +1,7 @@
 # Git Talk Server
-`Github user`들을 위한 채팅 서비스 서버 Repository 입니다.
+Chat service server Repository for `Github users`.
+Add friends based on `github` data, and it provides chat function and push notification function.
+
+Our primary goals are:
+- Aim for test coverage of 80% or more and write test cases that verify all APIs.
+- We finish the service completion and create an environment that users can actually use.
