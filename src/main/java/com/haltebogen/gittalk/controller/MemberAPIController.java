@@ -9,10 +9,7 @@ import com.haltebogen.gittalk.service.user.MemberService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,10 +37,6 @@ public class MemberAPIController {
 
     @Deprecated
     @Operation(summary = "멤버 검색", description = "키워드를 이용해서, 멤버를 검색할 수 있다.")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "OK"),
-//            @ApiResponse(code = 500, message = "Server Error")
-//    })
     @GetMapping("/search")
     public ResponseEntity<Object> searchMember(
             @PageableDefault Pageable pageable,
@@ -136,11 +129,10 @@ public class MemberAPIController {
     @GetMapping("/follow/search")
     public ResponseEntity<Object> searchFollow(
             Principal principal,
-            @PageableDefault Pageable pageable,
             @RequestParam String keyword
     ) {
         String memberId = principal.getName();
-        List<SearchGithubFollowResponseDto> follows = memberService.findGithubFollowBySearch(Long.valueOf(memberId), pageable, keyword);
+        List<SearchGithubFollowResponseDto> follows = memberService.findGithubFollowBySearch(Long.valueOf(memberId), keyword);
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, follows);
     }
 

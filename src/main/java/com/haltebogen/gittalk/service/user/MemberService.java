@@ -66,7 +66,7 @@ public class MemberService {
     }
 
     @Trace
-    public List<SearchGithubFollowResponseDto> findGithubFollowBySearch(Long id, Pageable pageable, String keyword) {
+    public List<SearchGithubFollowResponseDto> findGithubFollowBySearch(Long id, String keyword) {
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         List<GitUserProfileDto> followers = getGitUserFollowers(member.getNickName());
         List<GitUserProfileDto> followings = getGitUserFollowings(member.getNickName());
@@ -74,7 +74,7 @@ public class MemberService {
         List<SearchGithubFollowResponseDto> results = new ArrayList<>();
         for (SearchGithubFollowResponseDto searchGithubFollowResponseDto: githubFollowsData
              ) {
-            if (String.format(searchGithubFollowResponseDto.getNickName()).contains(keyword)) {
+            if (searchGithubFollowResponseDto.getNickName().contains(keyword)) {
                 results.add(searchGithubFollowResponseDto);
             }
         }
