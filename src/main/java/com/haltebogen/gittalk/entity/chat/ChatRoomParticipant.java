@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Document
+@Document(collection="participants")
 @Data
 public class ChatRoomParticipant {
 
