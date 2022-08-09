@@ -1,6 +1,7 @@
 package com.haltebogen.gittalk.entity.chat;
 
 import com.haltebogen.gittalk.dto.member.ChatMemberResponseDto;
+import com.haltebogen.gittalk.entity.user.Member;
 import com.mongodb.lang.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,13 +29,12 @@ public class ChatRoom {
     @Nullable
     private List<ChatMessage> messages;
 
-    private List<ChatMemberResponseDto> users;
+    private List<String> participantsId;
 
-    @CreatedDate
-    LocalDateTime createdAt;
-
-    @LastModifiedDa
-    LocalDateTime editedAt;
-
-
+    @Builder
+    public ChatRoom(String _id, String roomName, List<String> participantsId) {
+        this._id = _id;
+        this.roomName = roomName;
+        this.participantsId = participantsId;
+    }
 }
