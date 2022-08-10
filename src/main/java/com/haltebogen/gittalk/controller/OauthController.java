@@ -29,12 +29,10 @@ public class OauthController {
     }
 
     @Deprecated
-    @RequestMapping("/auth/github/callback")
+    @RequestMapping("/api/auth/github/callback")
     public String getCallbackView(String code) {
         TokenDto tokenDto = oAuthService.getAccessTokenDto(code);
         log.info("tokenDto: {}, {}, {}", tokenDto.getAccess_token(), tokenDto.getToken_type(), tokenDto.getScope());
-//        GithubUserResponseDto githubUserResponseDto = oAuthService.getGithubUserData(tokenDto);
-//        Member member = memberService.createMember(githubUserResponseDto);
         return "callback";
     }
 }
