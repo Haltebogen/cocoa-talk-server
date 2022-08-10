@@ -7,7 +7,6 @@ import java.util.List;
 
 @Data
 public class ChatRoomRegisterDto {
-    private String _id;
     private String roomName;
     private List<String> participantsId;
 }

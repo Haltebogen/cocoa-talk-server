@@ -31,10 +31,6 @@ public class ChatRoom {
 
     private List<String> participantsId;
 
-    @Builder
-    public ChatRoom(String _id, String roomName, List<String> participantsId) {
-        this._id = _id;
-        this.roomName = roomName;
-        this.participantsId = participantsId;
-    }
+    @CreatedDate
+    private LocalDateTime createdAt;
 }
