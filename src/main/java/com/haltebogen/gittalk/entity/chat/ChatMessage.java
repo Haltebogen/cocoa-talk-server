@@ -21,8 +21,9 @@ public class ChatMessage {
 
     @Id
     private String _id;
-    private List<String> participantId;
+
     private String sender;
+    private List<String> receiver;
     private String chatRoomId;
 
     private String message;

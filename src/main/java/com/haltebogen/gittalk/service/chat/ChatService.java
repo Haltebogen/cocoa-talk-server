@@ -45,4 +45,27 @@ public class ChatService {
         chatRoomRepository.save(chatRoom);
     }
 
+    @Transactional
+    public ChatRoom leftChatRoom(String userId, ChatRoomLeftDto chatRoomLeftDto) throws JsonGenerationException {
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomLeftDto.getChatRoomId()).get();
+        Member leftUser = memberRepository.findById(Long.valueOf(userId)).get();
+
+        chatRoom.getParticipantsId().remove(leftUser.getId());
+        List<String> otherUser = chatRoom.getParticipantsId();
+        ChatMessage leftChatMessage = new ChatMessage(
+                "_id",
+                "CHAT_MANAGER",
+                otherUser,
+                chatRoom.get_id(),
+                leftUser.getName() + "님이 채팅방에서 나가셨습니다.",
+                MessageStatus.TEXT,
+                LocalDateTime.now(),
+                MessageAlertType.LEFT
+        );
+
+        chatRoom.getMessages().add(leftChatMessage);
+
+        return chatRoom;
+    }
+
 }
