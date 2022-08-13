@@ -1,9 +1,7 @@
 package com.haltebogen.gittalk.entity.chat;
 
-import com.haltebogen.gittalk.dto.member.ChatMemberResponseDto;
 import com.mongodb.lang.Nullable;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,7 +23,6 @@ public class ChatMessage {
     private String sender;
     private List<Long> receiver;
     private String chatRoomId;
-
     private String message;
     private MessageStatus messageStatus;
 

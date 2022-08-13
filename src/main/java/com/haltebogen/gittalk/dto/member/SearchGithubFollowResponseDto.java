@@ -1,12 +1,14 @@
 package com.haltebogen.gittalk.dto.member;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Schema
 @Getter
 @NoArgsConstructor
-public class ChatMemberResponseDto {
+public class SearchGithubFollowResponseDto {
 
     private Long providerId;
     private String email;
@@ -18,7 +20,7 @@ public class ChatMemberResponseDto {
     private Boolean isMember;
 
     @Builder
-    public ChatMemberResponseDto(GitUserProfileDto member, Boolean isFollower, Boolean isFollowing, Boolean isMember) {
+    public SearchGithubFollowResponseDto(GitUserProfileDto member, Boolean isFollower, Boolean isFollowing, Boolean isMember) {
         this.providerId = member.getId();
         this.email = member.getEmail();
         this.nickName = member.getLogin();

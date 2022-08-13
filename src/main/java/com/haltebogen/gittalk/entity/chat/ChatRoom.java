@@ -1,7 +1,5 @@
 package com.haltebogen.gittalk.entity.chat;
 
-import com.haltebogen.gittalk.dto.member.ChatMemberResponseDto;
-import com.haltebogen.gittalk.entity.user.Member;
 import com.mongodb.lang.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
