@@ -29,7 +29,7 @@ public class ChatService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void createChatRoom(ChatRoomRegisterDto chatRoomRegisterDto) throws JsonProcessingException {
+    public ChatRoom createChatRoom(ChatRoomRegisterDto chatRoomRegisterDto) throws JsonProcessingException {
         String chatRoomId = UUID.randomUUID().toString();
         List<ChatMessage> messageList = new ArrayList<>();
 
@@ -43,15 +43,17 @@ public class ChatService {
         );
 
         chatRoomRepository.save(chatRoom);
+
+        return chatRoom;
     }
 
     @Transactional
-    public ChatRoom leftChatRoom(String userId, ChatRoomLeftDto chatRoomLeftDto) throws JsonGenerationException {
+    public ChatRoom leftChatRoom(Long leftUserId, ChatRoomLeftDto chatRoomLeftDto) throws JsonGenerationException {
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomLeftDto.getChatRoomId()).get();
-        Member leftUser = memberRepository.findById(Long.valueOf(userId)).get();
+        Member leftUser = memberRepository.findById(leftUserId).get();
 
         chatRoom.getParticipantsId().remove(leftUser.getId());
-        List<String> otherUser = chatRoom.getParticipantsId();
+        List<Long> otherUser = chatRoom.getParticipantsId();
         ChatMessage leftChatMessage = new ChatMessage(
                 "_id",
                 "CHAT_MANAGER",
@@ -65,7 +67,10 @@ public class ChatService {
 
         chatRoom.getMessages().add(leftChatMessage);
 
+        chatRoomRepository.save(chatRoom);
+
         return chatRoom;
+
     }
 
 }

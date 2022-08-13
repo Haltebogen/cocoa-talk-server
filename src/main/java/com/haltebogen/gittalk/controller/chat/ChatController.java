@@ -26,12 +26,12 @@ public class ChatController {
     }
 
     @PostMapping("{userName}/chatroom/left/")
-    public ResponseEntity<ChatRoom> leftChatRoom(
+    public ResponseEntity<?> leftChatRoom(
             @RequestBody ChatRoomLeftDto chatRoomLeftDto,
-            @PathVariable String userName) throws JsonProcessingException{
-        ChatRoom chatRoom = chatService.leftChatRoom(userName, chatRoomLeftDto);
+            @PathVariable Long leftUserId) throws JsonProcessingException{
+        chatService.leftChatRoom(leftUserId, chatRoomLeftDto);
 
-        return new ResponseEntity<>(chatRoom, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
