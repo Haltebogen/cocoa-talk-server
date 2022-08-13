@@ -23,7 +23,7 @@ public class ChatMessage {
     private String _id;
 
     private String sender;
-    private List<String> receiver;
+    private List<Long> receiver;
     private String chatRoomId;
 
     private String message;

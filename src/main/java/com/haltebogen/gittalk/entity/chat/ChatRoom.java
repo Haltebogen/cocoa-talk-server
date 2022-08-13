@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Document(collection = "rooms")
+@Document(collection = "chat_room")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,8 +29,16 @@ public class ChatRoom {
     @Nullable
     private List<ChatMessage> messages;
 
-    private List<String> participantsId;
+    private List<Long> participantsId;
 
     @CreatedDate
     private LocalDateTime createdAt;
+
+    @Builder
+    public ChatRoom(String _id, String roomName, List<Long> participantsId, LocalDateTime createdAt) {
+        this._id = _id;
+        this.roomName = roomName;
+        this.participantsId = participantsId;
+        this.createdAt = createdAt;
+    }
 }
