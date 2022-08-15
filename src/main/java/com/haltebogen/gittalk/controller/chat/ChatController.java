@@ -2,9 +2,7 @@ package com.haltebogen.gittalk.controller.chat;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.haltebogen.gittalk.dto.chat.ChatRoomLeftDto;
-import com.haltebogen.gittalk.dto.chat.ChatRoomRegisterDto;
-import com.haltebogen.gittalk.dto.chat.ChatRoomResponseDto;
+import com.haltebogen.gittalk.dto.chat.*;
 import com.haltebogen.gittalk.entity.chat.ChatRoom;
 import com.haltebogen.gittalk.response.ResponseHandler;
 import com.haltebogen.gittalk.service.chat.ChatService;
@@ -27,12 +25,32 @@ public class ChatController {
         return new ResponseHandler().generateResponse("OK",HttpStatus.OK, chatRoomResponseDto);
     }
 
-    @PostMapping("{userName}/chatroom/left/")
+    @PostMapping("{leftUserId}/chatroom/left/")
     public ResponseEntity<Object> leftChatRoom(
             @RequestBody ChatRoomLeftDto chatRoomLeftDto,
             @PathVariable Long leftUserId) throws JsonProcessingException{
 
         ChatRoomResponseDto chatRoomResponseDto = chatService.leftChatRoom(leftUserId, chatRoomLeftDto);
+
+        return new ResponseHandler().generateResponse("OK", HttpStatus.OK, chatRoomResponseDto);
+    }
+
+    @PatchMapping("/chatroom/{chatRoomId}")
+    public ResponseEntity<Object> updateMessage(
+            @RequestBody ChatMessageRequestDto chatMessageRequestDto,
+            @PathVariable String chatRoomId
+            ) throws JsonProcessingException {
+        ChatRoomResponseDto chatRoomResponseDto = chatService.updateChatRoomMessages(chatMessageRequestDto);
+
+        return new ResponseHandler().generateResponse("OK", HttpStatus.OK, chatRoomResponseDto);
+    }
+
+    @PostMapping("/chatroom/{chatRoomId}/invitation")
+    public ResponseEntity<Object> inviteMember(
+            @RequestBody MemberInviteRequestDto inviteRequestDto,
+            @PathVariable String chatRoomId
+            ) throws JsonProcessingException {
+        ChatRoomResponseDto chatRoomResponseDto = chatService.inviteMember(chatRoomId, inviteRequestDto)
 
         return new ResponseHandler().generateResponse("OK", HttpStatus.OK, chatRoomResponseDto);
     }

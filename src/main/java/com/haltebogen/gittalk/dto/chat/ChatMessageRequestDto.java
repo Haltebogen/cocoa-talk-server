@@ -10,8 +10,6 @@ import java.util.List;
 @Data
 public class ChatMessageRequestDto {
 
-    private String _id;
-
     private String sender;
 
     private List<Long> receiver;
@@ -25,8 +23,7 @@ public class ChatMessageRequestDto {
     private LocalDateTime createdAt;
 
     @Builder
-    public ChatMessageRequestDto(String _id, String sender, List<Long> receiver, String chatRoomId, String message, MessageStatus messageStatus, LocalDateTime createdAt) {
-        this._id = _id;
+    public ChatMessageRequestDto(String sender, List<Long> receiver, String chatRoomId, String message, MessageStatus messageStatus, LocalDateTime createdAt) {
         this.sender = sender;
         this.receiver = receiver;
         this.chatRoomId = chatRoomId;

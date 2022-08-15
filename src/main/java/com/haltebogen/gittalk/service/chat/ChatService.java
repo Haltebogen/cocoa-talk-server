@@ -3,6 +3,7 @@ package com.haltebogen.gittalk.service.chat;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.haltebogen.gittalk.dto.chat.*;
+import com.haltebogen.gittalk.dto.member.MemberResponseDto;
 import com.haltebogen.gittalk.entity.chat.ChatMessage;
 import com.haltebogen.gittalk.entity.chat.ChatRoom;
 import com.haltebogen.gittalk.entity.chat.MessageAlertType;
@@ -21,6 +22,8 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class ChatService {
+
+    private final String CHATTING_MANAGER = "관리자";
 
     private final ChatRoomRepository chatRoomRepository;
     private final MemberRepository memberRepository;
@@ -72,10 +75,9 @@ public class ChatService {
     }
 
     @Transactional
-    public void updateChatRoomMessages(ChatMessageRequestDto chatMessageRequestDto) {
+    public ChatRoomResponseDto updateChatRoomMessages(ChatMessageRequestDto chatMessageRequestDto) {
 
         ChatMessage chatMessage =  ChatMessage.builder()
-                ._id(chatMessageRequestDto.get_id())
                 .sender(chatMessageRequestDto.getSender())
                 .receiver(chatMessageRequestDto.getReceiver())
                 .chatRoomId(chatMessageRequestDto.getChatRoomId())
@@ -89,20 +91,49 @@ public class ChatService {
        ChatRoom chatRoom = chatRoomRepository.findById(chatMessage.getChatRoomId()).get();
        chatRoom.getMessages().add(chatMessage);
        chatRoomRepository.save(chatRoom);
+
+       return new ChatRoomResponseDto(chatRoom);
+
     }
 
     @Transactional
-    public void inviteMember(String chatRoomId, MemberInviteRequestDto memberInviteRequestDto) {
+    public ChatRoomResponseDto inviteMember(String chatRoomId, MemberInviteRequestDto memberInviteRequestDto) {
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).get();
 
         String inviteUserNickName = memberInviteRequestDto.getNickname();
-        Member member = memberRepository.findByNickName(inviteUserNickName).get();
+        Member invitedMember = memberRepository.findByNickName(inviteUserNickName).get();
 
         if (!chatRoom.getParticipantsId().contains(inviteUserNickName)) {
-            chatRoom.getParticipantsId().add(member.getId());
+            chatRoom.getParticipantsId().add(invitedMember.getId());
+
+            ChatMessage message = ChatMessage.builder()
+                    .chatRoomId(chatRoom.get_id())
+                    .sender(CHATTING_MANAGER)
+                    .receiver(chatRoom.getParticipantsId())
+                    .message(inviteUserNickName + "님이 초대되셨습니다!")
+                    .messageStatus(MessageStatus.TEXT)
+                    .createdAt(LocalDateTime.now())
+                    .build();
+
+            chatRoom.getMessages().add(message);
+
+            chatRoomRepository.save(chatRoom);
+
+            return new ChatRoomResponseDto(chatRoom);
         }
+        ChatMessage message = ChatMessage.builder()
+                .chatRoomId(chatRoom.get_id())
+                .sender(CHATTING_MANAGER)
+                .receiver(chatRoom.getParticipantsId())
+                .message(inviteUserNickName + "님이 이미 채팅방에 존재합니다.")
+                .messageStatus(MessageStatus.TEXT)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        chatRoom.getMessages().add(message);
+        chatRoomRepository.save(chatRoom);
+
+        return new ChatRoomResponseDto(chatRoom);
 
     }
-
-
 }
