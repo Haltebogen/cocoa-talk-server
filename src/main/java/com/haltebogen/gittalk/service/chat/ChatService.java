@@ -2,10 +2,7 @@ package com.haltebogen.gittalk.service.chat;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.haltebogen.gittalk.dto.chat.ChatMessageRequestDto;
-import com.haltebogen.gittalk.dto.chat.ChatRoomLeftDto;
-import com.haltebogen.gittalk.dto.chat.ChatRoomRegisterDto;
-import com.haltebogen.gittalk.dto.chat.MemberInviteRequestDto;
+import com.haltebogen.gittalk.dto.chat.*;
 import com.haltebogen.gittalk.entity.chat.ChatMessage;
 import com.haltebogen.gittalk.entity.chat.ChatRoom;
 import com.haltebogen.gittalk.entity.chat.MessageAlertType;
@@ -31,7 +28,7 @@ public class ChatService {
     private final ChatMessageRepository chatMessageRepository;
 
     @Transactional
-    public ChatRoom createChatRoom(ChatRoomRegisterDto chatRoomRegisterDto) throws JsonProcessingException {
+    public ChatRoomResponseDto createChatRoom(ChatRoomRegisterDto chatRoomRegisterDto) throws JsonProcessingException {
         String chatRoomId = UUID.randomUUID().toString();
         List<ChatMessage> messageList = new ArrayList<>();
 
@@ -45,11 +42,11 @@ public class ChatService {
 
         chatRoomRepository.save(chatRoom);
 
-        return chatRoom;
+        return new ChatRoomResponseDto(chatRoom);
     }
 
     @Transactional
-    public ChatRoom leftChatRoom(Long leftUserId, ChatRoomLeftDto chatRoomLeftDto) throws JsonGenerationException {
+    public ChatRoomResponseDto leftChatRoom(Long leftUserId, ChatRoomLeftDto chatRoomLeftDto) throws JsonGenerationException {
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomLeftDto.getChatRoomId()).get();
         Member leftUser = memberRepository.findById(leftUserId).get();
 
@@ -70,7 +67,7 @@ public class ChatService {
 
         chatRoomRepository.save(chatRoom);
 
-        return chatRoom;
+        return new ChatRoomResponseDto(chatRoom);
 
     }
 

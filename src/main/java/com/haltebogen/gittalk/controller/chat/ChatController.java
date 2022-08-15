@@ -4,7 +4,9 @@ package com.haltebogen.gittalk.controller.chat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.haltebogen.gittalk.dto.chat.ChatRoomLeftDto;
 import com.haltebogen.gittalk.dto.chat.ChatRoomRegisterDto;
+import com.haltebogen.gittalk.dto.chat.ChatRoomResponseDto;
 import com.haltebogen.gittalk.entity.chat.ChatRoom;
+import com.haltebogen.gittalk.response.ResponseHandler;
 import com.haltebogen.gittalk.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,19 +21,22 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> createRoom(@RequestBody ChatRoomRegisterDto chatRoomRegisterDto) throws JsonProcessingException {
-        chatService.createChatRoom(chatRoomRegisterDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Object> createRoom(@RequestBody ChatRoomRegisterDto chatRoomRegisterDto) throws JsonProcessingException {
+
+        ChatRoomResponseDto chatRoomResponseDto = chatService.createChatRoom(chatRoomRegisterDto);
+        return new ResponseHandler().generateResponse("OK",HttpStatus.OK, chatRoomResponseDto);
     }
 
     @PostMapping("{userName}/chatroom/left/")
-    public ResponseEntity<?> leftChatRoom(
+    public ResponseEntity<Object> leftChatRoom(
             @RequestBody ChatRoomLeftDto chatRoomLeftDto,
             @PathVariable Long leftUserId) throws JsonProcessingException{
-        chatService.leftChatRoom(leftUserId, chatRoomLeftDto);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        ChatRoomResponseDto chatRoomResponseDto = chatService.leftChatRoom(leftUserId, chatRoomLeftDto);
+
+        return new ResponseHandler().generateResponse("OK", HttpStatus.OK, chatRoomResponseDto);
     }
+
 
 
 }

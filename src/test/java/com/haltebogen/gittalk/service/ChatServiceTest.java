@@ -3,6 +3,7 @@ package com.haltebogen.gittalk.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.haltebogen.gittalk.dto.chat.ChatRoomLeftDto;
 import com.haltebogen.gittalk.dto.chat.ChatRoomRegisterDto;
+import com.haltebogen.gittalk.dto.chat.ChatRoomResponseDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
 import com.haltebogen.gittalk.entity.chat.ChatMessage;
 import com.haltebogen.gittalk.entity.chat.ChatRoom;
@@ -48,10 +49,10 @@ public class ChatServiceTest {
         ChatRoomRegisterDto chatRoomRegisterDto = chatInstance.createChatRoomRegisterDto();
 
         try {
-            ChatRoom chatRoom = chatService.createChatRoom(chatRoomRegisterDto);
+            ChatRoomResponseDto chatRoomResponseDto = chatService.createChatRoom(chatRoomRegisterDto);
 
-            assertThat(chatRoom.getRoomName()).isEqualTo(chatRoomRegisterDto.getRoomName());
-            assertThat(chatRoom.getParticipantsId()).isEqualTo(chatRoomRegisterDto.getParticipantsId());
+            assertThat(chatRoomResponseDto.getRoomName()).isEqualTo(chatRoomRegisterDto.getRoomName());
+            assertThat(chatRoomResponseDto.getParticipantsId()).isEqualTo(chatRoomRegisterDto.getParticipantsId());
 
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -83,9 +84,9 @@ public class ChatServiceTest {
         PARTICIPANTS_ID.remove(0);
 
         try {
-            chatRoom = chatService.leftChatRoom(1L, chatRoomLeftDto);
-            assertThat(chatRoom.getParticipantsId()).isEqualTo(PARTICIPANTS_ID);
-            assertThat(chatRoom.getMessages().size()).isEqualTo(1);
+            ChatRoomResponseDto chatRoomResponseDto = chatService.leftChatRoom(1L, chatRoomLeftDto);
+            assertThat(chatRoomResponseDto.getParticipantsId()).isEqualTo(PARTICIPANTS_ID);
+            assertThat(chatRoomResponseDto.getMessages().size()).isEqualTo(1);
 
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
