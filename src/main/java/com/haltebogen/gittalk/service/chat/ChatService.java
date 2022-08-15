@@ -35,7 +35,6 @@ public class ChatService {
         String chatRoomId = UUID.randomUUID().toString();
         List<ChatMessage> messageList = new ArrayList<>();
 
-
         ChatRoom chatRoom = new ChatRoom(
                 chatRoomId,
                 chatRoomRegisterDto.getRoomName(),
@@ -91,9 +90,7 @@ public class ChatService {
         chatMessageRepository.save(chatMessage);
 
        ChatRoom chatRoom = chatRoomRepository.findById(chatMessage.getChatRoomId()).get();
-
        chatRoom.getMessages().add(chatMessage);
-
        chatRoomRepository.save(chatRoom);
     }
 
@@ -107,7 +104,6 @@ public class ChatService {
         if (!chatRoom.getParticipantsId().contains(inviteUserNickName)) {
             chatRoom.getParticipantsId().add(member.getId());
         }
-
 
     }
 

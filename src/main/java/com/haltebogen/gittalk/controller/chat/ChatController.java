@@ -21,7 +21,6 @@ public class ChatController {
     @PostMapping("/register")
     public ResponseEntity<?> createRoom(@RequestBody ChatRoomRegisterDto chatRoomRegisterDto) throws JsonProcessingException {
         chatService.createChatRoom(chatRoomRegisterDto);
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -27,7 +27,7 @@ public class InitChatInstance {
     public ChatRoomRegisterDto createChatRoomRegisterDto() {
         return ChatRoomRegisterDto.builder()
                         .roomName(ROOM_NAME)
-                                .participantsId(PARTICIPANTS_ID).build();
+                        .participantsId(PARTICIPANTS_ID).build();
     }
 
     public ChatRoomLeftDto createChatRoomLeftDto() {
