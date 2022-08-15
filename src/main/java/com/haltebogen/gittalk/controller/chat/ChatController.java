@@ -3,7 +3,6 @@ package com.haltebogen.gittalk.controller.chat;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.haltebogen.gittalk.dto.chat.*;
-import com.haltebogen.gittalk.entity.chat.ChatRoom;
 import com.haltebogen.gittalk.response.ResponseHandler;
 import com.haltebogen.gittalk.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +39,7 @@ public class ChatController {
             @RequestBody ChatMessageRequestDto chatMessageRequestDto,
             @PathVariable String chatRoomId
             ) throws JsonProcessingException {
-        ChatRoomResponseDto chatRoomResponseDto = chatService.updateChatRoomMessages(chatMessageRequestDto);
+        ChatRoomResponseDto chatRoomResponseDto = chatService.updateChatRoomMessages(chatRoomId, chatMessageRequestDto);
 
         return new ResponseHandler().generateResponse("OK", HttpStatus.OK, chatRoomResponseDto);
     }
@@ -50,7 +49,7 @@ public class ChatController {
             @RequestBody MemberInviteRequestDto inviteRequestDto,
             @PathVariable String chatRoomId
             ) throws JsonProcessingException {
-        ChatRoomResponseDto chatRoomResponseDto = chatService.inviteMember(chatRoomId, inviteRequestDto)
+        ChatRoomResponseDto chatRoomResponseDto = chatService.inviteMember(chatRoomId, inviteRequestDto);
 
         return new ResponseHandler().generateResponse("OK", HttpStatus.OK, chatRoomResponseDto);
     }

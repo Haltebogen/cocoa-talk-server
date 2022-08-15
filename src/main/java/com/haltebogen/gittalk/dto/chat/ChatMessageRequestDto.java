@@ -14,8 +14,6 @@ public class ChatMessageRequestDto {
 
     private List<Long> receiver;
 
-    private String chatRoomId;
-
     private String message;
 
     private MessageStatus messageStatus;
@@ -23,10 +21,9 @@ public class ChatMessageRequestDto {
     private LocalDateTime createdAt;
 
     @Builder
-    public ChatMessageRequestDto(String sender, List<Long> receiver, String chatRoomId, String message, MessageStatus messageStatus, LocalDateTime createdAt) {
+    public ChatMessageRequestDto(String sender, List<Long> receiver, String message, MessageStatus messageStatus, LocalDateTime createdAt) {
         this.sender = sender;
         this.receiver = receiver;
-        this.chatRoomId = chatRoomId;
         this.message = message;
         this.messageStatus = messageStatus;
         this.createdAt = createdAt;

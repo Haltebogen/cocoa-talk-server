@@ -3,7 +3,6 @@ package com.haltebogen.gittalk.service.chat;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.haltebogen.gittalk.dto.chat.*;
-import com.haltebogen.gittalk.dto.member.MemberResponseDto;
 import com.haltebogen.gittalk.entity.chat.ChatMessage;
 import com.haltebogen.gittalk.entity.chat.ChatRoom;
 import com.haltebogen.gittalk.entity.chat.MessageAlertType;
@@ -75,12 +74,12 @@ public class ChatService {
     }
 
     @Transactional
-    public ChatRoomResponseDto updateChatRoomMessages(ChatMessageRequestDto chatMessageRequestDto) {
+    public ChatRoomResponseDto updateChatRoomMessages(String chatRoomId, ChatMessageRequestDto chatMessageRequestDto) {
 
         ChatMessage chatMessage =  ChatMessage.builder()
                 .sender(chatMessageRequestDto.getSender())
                 .receiver(chatMessageRequestDto.getReceiver())
-                .chatRoomId(chatMessageRequestDto.getChatRoomId())
+                .chatRoomId(chatRoomId)
                 .message(chatMessageRequestDto.getMessage())
                 .messageStatus(chatMessageRequestDto.getMessageStatus())
                 .createdAt(LocalDateTime.now())
@@ -136,4 +135,5 @@ public class ChatService {
         return new ChatRoomResponseDto(chatRoom);
 
     }
+
 }
