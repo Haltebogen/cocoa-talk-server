@@ -3,10 +3,7 @@ package com.haltebogen.gittalk.service.chat;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.haltebogen.gittalk.dto.chat.*;
-import com.haltebogen.gittalk.entity.chat.ChatMessage;
-import com.haltebogen.gittalk.entity.chat.ChatRoom;
-import com.haltebogen.gittalk.entity.chat.MessageAlertType;
-import com.haltebogen.gittalk.entity.chat.MessageStatus;
+import com.haltebogen.gittalk.entity.chat.*;
 import com.haltebogen.gittalk.entity.user.Member;
 import com.haltebogen.gittalk.repository.MemberRepository;
 import com.haltebogen.gittalk.repository.chat.ChatMessageRepository;
@@ -74,8 +71,7 @@ public class ChatService {
     }
 
     @Transactional
-    public ChatRoomResponseDto updateChatRoomMessages(String chatRoomId, ChatMessageRequestDto chatMessageRequestDto) {
-
+    public ChatRoomResponseDto updateChatRoomMessages(String chatRoomId, ChatMessageRequestDto chatMessageRequestDto) throws JsonProcessingException {
         ChatMessage chatMessage =  ChatMessage.builder()
                 .sender(chatMessageRequestDto.getSender())
                 .receiver(chatMessageRequestDto.getReceiver())
@@ -134,6 +130,26 @@ public class ChatService {
 
         return new ChatRoomResponseDto(chatRoom);
 
+    }
+
+    @Transactional
+    public ChatRoomResponseDto getDetailChatRoom(String chatRoomId) {
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).get();
+        return new ChatRoomResponseDto(chatRoom);
+    }
+
+    @Transactional
+    public List<ChatRoomResponseDto> getAllChatRoom(String userId) {
+        List<ChatRoom> chatRoomList =  chatRoomRepository.findAll();
+
+        List<ChatRoomResponseDto> chatRoomResponseDtoList = new ArrayList<>();
+
+        for (int i=0; i <= chatRoomList.size(); i++) {
+            if (chatRoomList.get(i).getParticipantsId().contains(userId)) {
+                chatRoomResponseDtoList.add(new ChatRoomResponseDto(chatRoomList.get(i)));
+            }
+            }
+        return chatRoomResponseDtoList;
     }
 
 }

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/chat")
@@ -54,6 +56,22 @@ public class ChatController {
         return new ResponseHandler().generateResponse("OK", HttpStatus.OK, chatRoomResponseDto);
     }
 
+    @GetMapping("/chatroom/detail/{chatRoomId}")
+    public ResponseEntity<Object> getDetailChatRoom(
+            @PathVariable String chatRoomId
+    ) throws JsonProcessingException{
+        ChatRoomResponseDto chatRoomResponseDto = chatService.getDetailChatRoom(chatRoomId);
 
+        return new ResponseHandler().generateResponse("OK", HttpStatus.OK, chatRoomResponseDto);
+    }
+
+    @GetMapping("/chatroom/{userId}}")
+    public ResponseEntity<Object> getAllChatRoom(
+            @PathVariable Long userId
+    ) throws JsonProcessingException {
+        List<ChatRoomResponseDto> chatRoomResponseDtoList = chatService.getAllChatRoom(userId.toString());
+
+        return new ResponseHandler().generateResponse("OK", HttpStatus.OK, chatRoomResponseDtoList);
+    }
 
 }
