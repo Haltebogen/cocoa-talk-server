@@ -2,8 +2,10 @@ package com.haltebogen.gittalk.dto.member;
 
 import com.haltebogen.gittalk.entity.user.Member;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public class MemberDetailRequestDto {
     private String email;
     private String name;
