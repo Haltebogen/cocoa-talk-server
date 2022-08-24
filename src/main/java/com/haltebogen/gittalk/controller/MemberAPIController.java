@@ -63,6 +63,19 @@ public class MemberAPIController {
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, memberResponseDto);
     }
 
+    @PutMapping
+    public ResponseEntity<Object> updateProfile(
+            Principal principal,
+            @RequestBody MemberDetailRequestDto memberDetailRequestDto
+    ) {
+        String memberId = principal.getName();
+        MemberDetailResponseDto memberDetailResponseDto = memberService.updateMember(
+                Long.valueOf(memberId),
+                memberDetailRequestDto
+        );
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, memberDetailResponseDto);
+    }
+
     @PostMapping("/follow")
     public ResponseEntity<Object> createFollowRequest(
             Principal principal,
