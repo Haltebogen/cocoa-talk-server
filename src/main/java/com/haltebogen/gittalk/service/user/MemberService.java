@@ -71,6 +71,7 @@ public class MemberService {
         member.updateBio(memberDetailRequestDto.getBio());
         member.updateStatusMessage(memberDetailRequestDto.getStatusMessage());
         member.updateProfileImageUrl(member.getProfileImageUrl());
+        memberRepository.save(member);
         return new MemberDetailResponseDto(member);
     }
 
