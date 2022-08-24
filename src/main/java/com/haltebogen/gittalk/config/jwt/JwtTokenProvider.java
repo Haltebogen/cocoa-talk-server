@@ -14,7 +14,8 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtTokenProvider {
 
-    private static final int ACCESS_TOKEN_EXPIRATION_TIME = 7200000; // 2 hour
+    //    private static final int ACCESS_TOKEN_EXPIRATION_TIME = 7200000; // 2 hour
+    private static final int ACCESS_TOKEN_EXPIRATION_TIME = 1209600000; // 2 week
     private static final int REFRESH_TOKEN_EXPIRATION_TIME = 1209600000; // 14 * 24 * 60 * 60 * 1000 = 2 weeks
     private final Environment env;
 
