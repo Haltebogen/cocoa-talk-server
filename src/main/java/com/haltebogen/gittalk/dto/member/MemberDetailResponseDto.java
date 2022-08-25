@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public class MemberDetailResponseDto {
 
+    private Long id;
     private String email;
     private String name;
     private String nickName;
@@ -17,6 +18,7 @@ public class MemberDetailResponseDto {
     private Long followingsNum;
 
     public MemberDetailResponseDto(Member member) {
+        this.id = member.getId();
         this.email = member.getEmail();
         this.name = member.getName();
         this.nickName = member.getNickName();
