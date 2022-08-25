@@ -2,11 +2,11 @@ package com.haltebogen.gittalk.dto.member;
 
 import com.haltebogen.gittalk.entity.user.Member;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-public class MemberDetailResponseDto {
-
-    private Long id;
+@RequiredArgsConstructor
+public class MemberDetailRequestDto {
     private String email;
     private String name;
     private String nickName;
@@ -17,8 +17,7 @@ public class MemberDetailResponseDto {
     private Long followersNum;
     private Long followingsNum;
 
-    public MemberDetailResponseDto(Member member) {
-        this.id = member.getId();
+    public MemberDetailRequestDto(Member member) {
         this.email = member.getEmail();
         this.name = member.getName();
         this.nickName = member.getNickName();
@@ -29,4 +28,5 @@ public class MemberDetailResponseDto {
         this.bio = member.getBio();
         this.company = member.getCompany();
     }
+
 }

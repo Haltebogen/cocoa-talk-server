@@ -1,6 +1,7 @@
 package com.haltebogen.gittalk.service.user;
 
 import com.haltebogen.gittalk.dto.member.GitUserProfileDto;
+import com.haltebogen.gittalk.dto.member.MemberDetailRequestDto;
 import com.haltebogen.gittalk.dto.member.MemberDetailResponseDto;
 import com.haltebogen.gittalk.dto.member.SearchGithubFollowResponseDto;
 import com.haltebogen.gittalk.dto.oauth.GithubUserResponseDto;
@@ -62,6 +63,15 @@ public class MemberService {
 
     public MemberDetailResponseDto getMember(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return new MemberDetailResponseDto(member);
+    }
+
+    public MemberDetailResponseDto updateMember(Long id, MemberDetailRequestDto memberDetailRequestDto) {
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        member.updateBio(memberDetailRequestDto.getBio());
+        member.updateStatusMessage(memberDetailRequestDto.getStatusMessage());
+        member.updateProfileImageUrl(member.getProfileImageUrl());
+        memberRepository.save(member);
         return new MemberDetailResponseDto(member);
     }
 
