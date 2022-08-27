@@ -17,6 +17,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
     List<Member> findAllByProviderId(Long providerId);
     Optional<Member> findByProviderId(Long providerId);
+    Optional<Member> findById(Long leftUserId);
+    Optional<Member> findByNickName(String NickName);
 
     boolean existsByEmail(String email);
     boolean existsByProviderId(Long providerId);
@@ -25,4 +27,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "where m.nickName like %:keyword% or m.email like %:keyword% " +
             "order by m.id desc")
     Page<Member> findBySearch(@Param("keyword") String keyword, Pageable pageable);
+
 }
