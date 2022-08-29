@@ -95,7 +95,7 @@ public class FollowService {
         List<Follow> followers = followRepository.findAllByFollowerAndFollowStatus(member, FollowStatus.COMPLETED);
         List<Follow> followings = followRepository.findAllByFollowingAndFollowStatus(member, FollowStatus.COMPLETED);
         follows.addAll(followers);
-        followers.addAll(followings);
+        follows.addAll(followings);
 
         return follows.stream().map(follow -> new MemberDetailResponseDto(follow.getFollowing())).collect(Collectors.toList());
     }
