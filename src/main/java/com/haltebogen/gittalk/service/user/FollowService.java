@@ -92,11 +92,17 @@ public class FollowService {
     public List<MemberDetailResponseDto> getFollowers(Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
         List<Follow> follows = new ArrayList<>();
+        List<MemberDetailResponseDto> result = new ArrayList<>();
         List<Follow> followers = followRepository.findAllByFollowerAndFollowStatus(member, FollowStatus.COMPLETED);
         List<Follow> followings = followRepository.findAllByFollowingAndFollowStatus(member, FollowStatus.COMPLETED);
         follows.addAll(followers);
         follows.addAll(followings);
+        List<MemberDetailResponseDto> followersData = follows.stream().map(follow -> new MemberDetailResponseDto(follow.getFollower())).collect(Collectors.toList());
+        List<MemberDetailResponseDto> followingsData = follows.stream().map(follow -> new MemberDetailResponseDto(follow.getFollowing())).collect(Collectors.toList());
 
-        return follows.stream().map(follow -> new MemberDetailResponseDto(follow.getFollowing())).collect(Collectors.toList());
+        result.addAll(followersData);
+        result.addAll(followingsData);
+
+        return result;
     }
 }
