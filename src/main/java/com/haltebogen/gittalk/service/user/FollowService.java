@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,7 +89,12 @@ public class FollowService {
         @Transactional
     public List<MemberDetailResponseDto> getFollowers(Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
-        List<Follow> follows = followRepository.findAllByFollowerAndFollowStatus(member, FollowStatus.COMPLETED);
+        List<Follow> follows = new ArrayList<>();
+        List<Follow> followers = followRepository.findAllByFollowerAndFollowStatus(member, FollowStatus.COMPLETED);
+        List<Follow> followings = followRepository.findAllByFollowingAndFollowStatus(member, FollowStatus.COMPLETED);
+        follows.addAll(followers);
+        followers.addAll(followings);
+
         return follows.stream().map(follow -> new MemberDetailResponseDto(follow.getFollowing())).collect(Collectors.toList());
     }
 }
