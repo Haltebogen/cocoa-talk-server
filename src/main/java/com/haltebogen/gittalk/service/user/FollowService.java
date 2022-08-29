@@ -52,7 +52,7 @@ public class FollowService {
                 .notificationType(NotificationType.FOLLOW_REQUEST)
                 .build();
 
-        notificationService.createNotification(targetMember, notificationDto);
+        notificationService.createNotification(targetMember, notificationDto, member);
         return FollowResponseDto.builder()
                 .follower(new MemberDetailResponseDto(member))
                 .following(new MemberDetailResponseDto(targetMember))
@@ -75,7 +75,7 @@ public class FollowService {
                 .notificationType(NotificationType.FOLLOW_ALLOW)
                 .build();
 
-        notificationService.createNotification(targetMember, notificationDto);
+        notificationService.createNotification(targetMember, notificationDto, member);
 
         return FollowResponseDto.builder()
                 .follower(new MemberDetailResponseDto(member))

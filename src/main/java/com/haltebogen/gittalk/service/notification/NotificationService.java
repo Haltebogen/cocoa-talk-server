@@ -27,11 +27,12 @@ public class NotificationService {
     }
 
     @Transactional
-    public NotificationDto createNotification(Member member, NotificationDto notificationDto) {
+    public NotificationDto createNotification(Member targetMember, NotificationDto notificationDto, Member sender) {
         Notification notification = Notification.builder()
                 .notificationDto(notificationDto)
-                .receiver(member)
+                .receiver(targetMember)
                 .build();
+        notification.updateSender(sender);
         notificationRepository.save(notification);
         return notificationDto;
     }
