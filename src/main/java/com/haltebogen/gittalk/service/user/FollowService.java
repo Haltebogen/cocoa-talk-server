@@ -35,7 +35,7 @@ public class FollowService {
     @Transactional
     public FollowResponseDto createFollowRequest(Long memberId, Long followTargetMemberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
-        Member targetMember = memberRepository.findById(followTargetMemberId).orElseThrow(IllegalArgumentException::new);
+        Member targetMember = memberRepository.findByProviderId(followTargetMemberId).orElseThrow(IllegalArgumentException::new);
 
         Follow follow = Follow.builder()
                 .follower(member)
