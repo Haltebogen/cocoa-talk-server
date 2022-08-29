@@ -64,9 +64,11 @@ public class FollowService {
     public FollowResponseDto createFollowAllow(Long memberId, Long followTargetMemberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
         Member targetMember = memberRepository.findById(followTargetMemberId).orElseThrow(IllegalArgumentException::new);
-        Follow follow = followRepository.findByFollowingAndFollowStatus(member, FollowStatus.PENDING);
+        Follow following = followRepository.findByFollowingAndFollowStatus(member, FollowStatus.PENDING);
+        Follow follower = followRepository.findByFollowingAndFollowStatus(member, FollowStatus.PENDING);
 
-        follow.updateFollowStatus(FollowStatus.COMPLETED);
+        following.updateFollowStatus(FollowStatus.COMPLETED);
+        follower.updateFollowStatus(FollowStatus.COMPLETED);
 
         NotificationDto notificationDto = NotificationDto.builder()
                 .title(String.format(FOLLOW_ALLOW_TITLE))
@@ -80,7 +82,7 @@ public class FollowService {
 
         return FollowResponseDto.builder()
                 .follower(new MemberDetailResponseDto(member))
-                .following(new MemberDetailResponseDto(follow.getFollowing()))
+                .following(new MemberDetailResponseDto(following.getFollowing()))
                 .followStatus(FollowStatus.COMPLETED)
                 .build();
     }
