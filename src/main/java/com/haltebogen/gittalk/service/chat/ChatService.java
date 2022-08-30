@@ -31,18 +31,24 @@ public class ChatService {
         String chatRoomId = UUID.randomUUID().toString();
         List<ChatMessage> messageList = new ArrayList<>();
 
-        ChatRoom chatRoom = new ChatRoom(
-                chatRoomId,
-                chatRoomRegisterDto.getRoomName(),
-                messageList,
-                chatRoomRegisterDto.getParticipantsId(),
-                LocalDateTime.now()
-        );
+        if (isExistChatRoom(chatRoomRegisterDto)){
+            ChatRoom chatRoom = chatRoomRepository.findByChatRoomId(chatRoomRegisterDto.getParticipantsId());
+            return new ChatRoomResponseDto(chatRoom);
+        }
+        else {
+            ChatRoom chatRoom = new ChatRoom(
+                    chatRoomId,
+                    chatRoomRegisterDto.getRoomName(),
+                    messageList,
+                    chatRoomRegisterDto.getParticipantsId(),
+                    LocalDateTime.now()
+            );
+            chatRoomRepository.save(chatRoom);
+            return new ChatRoomResponseDto(chatRoom);
+        }
 
-        chatRoomRepository.save(chatRoom);
-
-        return new ChatRoomResponseDto(chatRoom);
     }
+
 
     @Transactional
     public ChatRoomResponseDto leftChatRoom(Long leftUserId, ChatRoomLeftDto chatRoomLeftDto) throws JsonGenerationException {
@@ -151,5 +157,16 @@ public class ChatService {
             }
         return chatRoomResponseDtoList;
     }
+
+    private Boolean isExistChatRoom(ChatRoomRegisterDto chatRoomRegisterDto) {
+        List<ChatRoom> chatRoomList = chatRoomRepository.findAll();
+        for (int i=0; i<chatRoomList.size(); i++) {
+            if(chatRoomList.get(i).getParticipantsId().equals(chatRoomRegisterDto.getParticipantsId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

@@ -13,6 +13,6 @@ public interface ChatRoomRepository extends MongoRepository<ChatRoom, String> {
 
     @Override
     Optional<ChatRoom> findById(String s);
-    
 
+    ChatRoom findByChatRoomId(List<Long> participantsId);
 }
