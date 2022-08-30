@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -41,11 +42,12 @@ public class ChatController {
             @ApiResponse(code = 400, message = "Bad Request!"),
             @ApiResponse(code = 500, message = "Server Error")
     })
-    @PostMapping("{leftUserId}/chatroom/left/")
+    @PostMapping("/chatroom/left/")
     public ResponseEntity<Object> leftChatRoom(
             @RequestBody ChatRoomLeftDto chatRoomLeftDto,
-            @PathVariable String leftUserId) throws JsonProcessingException{
-
+            Principal principal
+            ) throws JsonProcessingException{
+        String leftUserId = principal.getName();
         ChatRoomResponseDto chatRoomResponseDto = chatService.leftChatRoom(Long.valueOf(leftUserId), chatRoomLeftDto);
 
         return new ResponseHandler().generateResponse("OK", HttpStatus.OK, chatRoomResponseDto);
@@ -102,11 +104,12 @@ public class ChatController {
             @ApiResponse(code = 200, message = "OK!"),
             @ApiResponse(code = 500, message = "Server Error")
     })
-    @GetMapping("/chatroom/{userId}}")
+    @GetMapping("/chatroom}")
     public ResponseEntity<Object> getAllChatRoom(
-            @PathVariable Long userId
+            Principal principal
     ) throws JsonProcessingException {
-        List<ChatRoomResponseDto> chatRoomResponseDtoList = chatService.getAllChatRoom(userId.toString());
+        String memberId = principal.getName();
+        List<ChatRoomResponseDto> chatRoomResponseDtoList = chatService.getAllChatRoom(memberId);
 
         return new ResponseHandler().generateResponse("OK", HttpStatus.OK, chatRoomResponseDtoList);
     }
