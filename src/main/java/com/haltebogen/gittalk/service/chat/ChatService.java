@@ -29,13 +29,13 @@ public class ChatService {
     @Transactional
     public ChatRoomResponseDto createChatRoom(ChatRoomRegisterDto chatRoomRegisterDto) throws JsonProcessingException {
         String chatRoomId = UUID.randomUUID().toString();
-        List<ChatMessage> messageList = new ArrayList<>();
 
         if (isExistChatRoom(chatRoomRegisterDto)){
             ChatRoom chatRoom = chatRoomRepository.findByChatRoomId(chatRoomRegisterDto.getParticipantsId());
             return new ChatRoomResponseDto(chatRoom);
         }
         else {
+            List<ChatMessage> messageList = new ArrayList<>();
             ChatRoom chatRoom = new ChatRoom(
                     chatRoomId,
                     chatRoomRegisterDto.getRoomName(),
@@ -47,6 +47,20 @@ public class ChatService {
             return new ChatRoomResponseDto(chatRoom);
         }
 
+    }
+    @Transactional
+    public ChatRoomResponseDto createChatRoomBySearch(ChatRoomRegisterDto chatRoomRegisterDto) throws JsonProcessingException {
+        String chatRoomId = UUID.randomUUID().toString();
+        List<ChatMessage> messageList = new ArrayList<>();
+        ChatRoom chatRoom = new ChatRoom(
+                chatRoomId,
+                chatRoomRegisterDto.getRoomName(),
+                messageList,
+                chatRoomRegisterDto.getParticipantsId(),
+                LocalDateTime.now()
+        );
+        chatRoomRepository.save(chatRoom);
+        return new ChatRoomResponseDto(chatRoom);
     }
 
 
