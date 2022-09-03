@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("auth")
@@ -34,10 +37,17 @@ public class AuthController {
             @ApiResponse(code=500, message = "Server Error")
     })
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody TokenDto tokenDto) {
+    public ResponseEntity<Object> login(@RequestBody TokenDto tokenDto, HttpServletResponse response) {
         GithubUserResponseDto githubUserResponseDto = oAuthService.getGithubUserData(tokenDto);
         Member member = memberService.createMember(githubUserResponseDto);
         JwtTokenDto jwtTokenDto = oAuthService.createLoginMemberJwt(member);
+
+        Cookie cookie = new Cookie("refreshToken", jwtTokenDto.getRefreshToken());
+
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+
+        response.addCookie(cookie);
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, jwtTokenDto);
     }
 
