@@ -139,7 +139,7 @@ public class MemberService {
 
     private List<GitUserProfileDto> getGitUserFollowers(String nickName) {
         HttpHeaders headers = new HttpHeaders();
-        String githubSecret = "token "+ env.getProperty("github.secret");
+        String githubSecret = "token "+ env.getProperty("github.token");
         headers.set("Authorization", githubSecret);
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
@@ -155,7 +155,7 @@ public class MemberService {
 
     private List<GitUserProfileDto> getGitUserFollowings(String nickName) {
         HttpHeaders headers = new HttpHeaders();
-        String githubSecret = "token "+ env.getProperty("github.secret");
+        String githubSecret = "token "+ env.getProperty("github.token");
         headers.set("Authorization", githubSecret);
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
