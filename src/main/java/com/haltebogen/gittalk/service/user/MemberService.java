@@ -10,6 +10,7 @@ import com.haltebogen.gittalk.entity.user.ProviderType;
 import com.haltebogen.gittalk.repository.MemberRepository;
 import com.haltebogen.gittalk.trace.Trace;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
@@ -29,6 +30,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final RestTemplate restTemplate;
+    private final Environment env;
 
     private final String PAGINATION_PAGE_SIZE = "1000000";
     private final String GITHUB_FOLLOWERS_API_URL_PATH = "https://api.github.com/users/%s/followers?per_page=%s";
@@ -137,6 +139,8 @@ public class MemberService {
 
     private List<GitUserProfileDto> getGitUserFollowers(String nickName) {
         HttpHeaders headers = new HttpHeaders();
+        String githubSecret = "token "+ env.getProperty("github.secret");
+        headers.set("Authorization", githubSecret);
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         ResponseEntity<GitUserProfileDto[]> responseGithubData = restTemplate.exchange(
@@ -151,6 +155,8 @@ public class MemberService {
 
     private List<GitUserProfileDto> getGitUserFollowings(String nickName) {
         HttpHeaders headers = new HttpHeaders();
+        String githubSecret = "token "+ env.getProperty("github.secret");
+        headers.set("Authorization", githubSecret);
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         ResponseEntity<GitUserProfileDto[]> responseGithubData = restTemplate.exchange(
