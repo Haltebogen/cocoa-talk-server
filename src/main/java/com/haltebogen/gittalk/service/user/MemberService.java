@@ -72,7 +72,7 @@ public class MemberService {
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         member.updateBio(memberDetailRequestDto.getBio());
         member.updateStatusMessage(memberDetailRequestDto.getStatusMessage());
-        member.updateProfileImageUrl(member.getProfileImageUrl());
+        member.updateProfileImageUrl(memberDetailRequestDto.getProfileImageUrl());
         memberRepository.save(member);
         return new MemberDetailResponseDto(member);
     }
