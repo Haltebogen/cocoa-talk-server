@@ -9,14 +9,13 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.connector.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.stream.Collectors;
@@ -45,5 +44,12 @@ public class NotificationController {
                 pageData.hasNext(),
                 pageData.stream().map(NotificationResponseDto::new).collect(Collectors.toList())
         ));
+    }
+
+    @PostMapping("/{notificationId}")
+    public ResponseEntity<Object> removeNotification(
+            @PathVariable Long notificationId
+    ) {
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, {});
     }
 }
