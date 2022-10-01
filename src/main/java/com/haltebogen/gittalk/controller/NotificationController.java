@@ -1,6 +1,7 @@
 package com.haltebogen.gittalk.controller;
 
 import com.haltebogen.gittalk.dto.PaginationResponseDto;
+import com.haltebogen.gittalk.dto.notification.NotificationDto;
 import com.haltebogen.gittalk.dto.notification.NotificationResponseDto;
 import com.haltebogen.gittalk.entity.notification.Notification;
 import com.haltebogen.gittalk.response.ResponseHandler;
@@ -50,6 +51,7 @@ public class NotificationController {
     public ResponseEntity<Object> removeNotification(
             @PathVariable Long notificationId
     ) {
-        return ResponseHandler.generateResponse("ok", HttpStatus.OK, {});
+        NotificationDto notificationDto = notificationService.removeNotification(notificationId)
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, notificationDto);
     }
 }
