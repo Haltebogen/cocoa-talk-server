@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 public class NotificationResponseDto {
 
+    private Long id;
     private String title;
     private String link;
     private String message;
@@ -17,6 +18,7 @@ public class NotificationResponseDto {
     private Member receiver;
 
     public NotificationResponseDto(Notification notification) {
+        this.id = notification.getId();
         this.title = notification.getTitle();
         this.link = notification.getLink();
         this.message = notification.getMessage();

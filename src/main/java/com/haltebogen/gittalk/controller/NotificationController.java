@@ -47,11 +47,11 @@ public class NotificationController {
         ));
     }
 
-    @PostMapping("/{notificationId}")
+    @DeleteMapping("/{notificationId}")
     public ResponseEntity<Object> removeNotification(
             @PathVariable Long notificationId
     ) {
-        NotificationDto notificationDto = notificationService.removeNotification(notificationId)
+        NotificationDto notificationDto = notificationService.removeNotification(notificationId);
         return ResponseHandler.generateResponse("ok", HttpStatus.OK, notificationDto);
     }
 }
