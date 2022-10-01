@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -102,11 +103,12 @@ public class ChatController {
             @ApiResponse(code = 200, message = "OK!"),
             @ApiResponse(code = 500, message = "Server Error")
     })
-    @GetMapping("/chatroom/{userId}}")
+    @GetMapping("/chatrooms")
     public ResponseEntity<Object> getAllChatRoom(
-            @PathVariable Long userId
+            Principal principal
     ) throws JsonProcessingException {
-        List<ChatRoomResponseDto> chatRoomResponseDtoList = chatService.getAllChatRoom(userId.toString());
+        String userId = principal.getName();
+        List<ChatRoomResponseDto> chatRoomResponseDtoList = chatService.getAllChatRoom(userId);
 
         return new ResponseHandler().generateResponse("OK", HttpStatus.OK, chatRoomResponseDtoList);
     }

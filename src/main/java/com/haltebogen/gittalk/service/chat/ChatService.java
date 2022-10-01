@@ -144,9 +144,9 @@ public class ChatService {
 
         List<ChatRoomResponseDto> chatRoomResponseDtoList = new ArrayList<>();
 
-        for (int i=0; i <= chatRoomList.size(); i++) {
-            if (chatRoomList.get(i).getParticipantsId().contains(userId)) {
-                chatRoomResponseDtoList.add(new ChatRoomResponseDto(chatRoomList.get(i)));
+        for (ChatRoom chatRoom : chatRoomList) {
+            if (chatRoom.getParticipantsId().contains(Long.valueOf(userId))) {
+                chatRoomResponseDtoList.add(new ChatRoomResponseDto(chatRoom));
             }
             }
         return chatRoomResponseDtoList;
