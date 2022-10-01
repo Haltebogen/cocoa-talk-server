@@ -3,6 +3,7 @@ package com.haltebogen.gittalk.service.notification;
 
 import com.haltebogen.gittalk.dto.notification.NotificationDto;
 import com.haltebogen.gittalk.entity.notification.Notification;
+import com.haltebogen.gittalk.entity.notification.NotificationType;
 import com.haltebogen.gittalk.entity.user.Member;
 import com.haltebogen.gittalk.repository.MemberRepository;
 import com.haltebogen.gittalk.repository.NotificationRepository;
@@ -35,5 +36,17 @@ public class NotificationService {
         notification.updateSender(sender);
         notificationRepository.save(notification);
         return notificationDto;
+    }
+
+    public NotificationDto removeNotification(Long notificationId) {
+        Notification notification = notificationRepository.findById(notificationId).orElseThrow(IllegalArgumentException::new);
+        notificationRepository.deleteById(notification.getId());
+        return NotificationDto.builder()
+                .title(notification.getTitle())
+                .link(notification.getLink())
+                .message(notification.getMessage())
+                .isRead(notification.getIsRead())
+                .notificationType(notification.getNotificationType())
+                .build();
     }
 }

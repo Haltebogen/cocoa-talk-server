@@ -1,6 +1,7 @@
 package com.haltebogen.gittalk.controller;
 
 import com.haltebogen.gittalk.dto.PaginationResponseDto;
+import com.haltebogen.gittalk.dto.notification.NotificationDto;
 import com.haltebogen.gittalk.dto.notification.NotificationResponseDto;
 import com.haltebogen.gittalk.entity.notification.Notification;
 import com.haltebogen.gittalk.response.ResponseHandler;
@@ -9,14 +10,13 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.connector.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.stream.Collectors;
@@ -45,5 +45,13 @@ public class NotificationController {
                 pageData.hasNext(),
                 pageData.stream().map(NotificationResponseDto::new).collect(Collectors.toList())
         ));
+    }
+
+    @DeleteMapping("/{notificationId}")
+    public ResponseEntity<Object> removeNotification(
+            @PathVariable Long notificationId
+    ) {
+        NotificationDto notificationDto = notificationService.removeNotification(notificationId);
+        return ResponseHandler.generateResponse("ok", HttpStatus.OK, notificationDto);
     }
 }
